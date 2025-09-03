@@ -1,0 +1,124 @@
+# Configuración de Sword Enchantments para HyserCore
+# Archivo de configuración para encantamientos personalizados de espadas
+
+general:
+  prefix: "&8[&bSwordEnchant&8] "
+  enabled: true
+
+# Configuración de encantamientos
+enchantments:
+  # Encantamiento Dash - Impulso aéreo
+  dash:
+    enabled: true
+    cooldown-seconds: 15  # Cooldown en segundos (convertible a minutos: 60 = 1min)
+    forward-force: 1.8    # Fuerza hacia adelante
+    upward-force: 1.2     # Fuerza hacia arriba
+    play-sound: true
+    sound: "ENDERDRAGON_WINGS"  # Sonido al activar
+    
+  # Encantamiento Ice Aspect - Efectos de hielo
+  ice-aspect:
+    enabled: true
+    activation-chance: 0.15   # 15% de probabilidad al atacar (más balanceado)
+    cooldown-seconds: 3       # Cooldown interno sin mensajes
+    mode: "both"  # "effects", "cage", o "both"
+    play-sound: true
+    sound: "GLASS"
+    play-destruction-sound: true
+    
+    # Configuración de efectos de estado
+    status-effects:
+      - "SLOW"      # Ralentizar
+      - "JUMP"      # Paralizar (reducir salto)
+      - "WEAKNESS"  # Debilitar
+    effect-duration-seconds: 5  # Reducido para PvP balanceado
+    effect-amplifier: 1         # Reducido para PvP balanceado
+    
+    # Configuración de celda de hielo tipo igloo
+    igloo-radius: 4             # Radio del igloo (más grande)
+    igloo-height: 4             # Altura del igloo tipo domo
+    capture-radius: 3           # Radio para capturar jugadores cercanos
+    cage-duration-seconds: 8    # Duración del igloo
+    ice-material: "PACKED_ICE"  # Hielo compacto que no suelta agua
+    
+  # Encantamiento Sharpness+ - Daño adicional
+  sharpness:
+    enabled: true
+    bonus-damage: 1.5     # Daño adicional
+    
+  # Encantamiento Lifesteal - Roba vida
+  lifesteal:
+    enabled: true
+    activation-chance: 0.25  # 25% de probabilidad
+    heal-percentage: 0.25    # 25% del daño como curación
+    
+  # Encantamiento Vampire - Regeneración al atacar  
+  vampire:
+    enabled: true
+    activation-chance: 0.20     # 20% de probabilidad
+    regen-duration-seconds: 4   # 4 segundos de regeneración
+    regen-amplifier: 1          # Nivel de regeneración
+    
+  # Encantamiento Bleeding - Sangrado continuo
+  bleeding:
+    enabled: true
+    activation-chance: 0.18     # 18% de probabilidad
+    duration-seconds: 6         # 6 segundos de sangrado
+    damage-per-tick: 0.5        # 0.5 corazones por tick
+    tick-interval: 20           # Cada segundo (20 ticks)
+    
+  # Encantamiento Explosive - Knockback explosivo
+  explosive:
+    enabled: true
+    activation-chance: 0.12     # 12% de probabilidad
+    knockback-force: 1.8        # Fuerza del knockback
+    play-effect: true           # Efecto visual de explosión
+    
+  # Encantamiento Executioner - Más daño a enemigos heridos
+  executioner:
+    enabled: true
+    health-threshold: 0.30      # 30% de vida o menos
+    bonus-multiplier: 1.5       # 150% del daño normal
+
+# Formato del lore para encantamientos
+lore-format: "&b⚡ {enchant}"
+
+# Mensajes del sistema
+messages:
+  no-permission: "&cNo tienes permisos para usar este comando."
+  config-reloaded: "&aConfiguración de Sword Enchantments recargada correctamente."
+  no-sword: "&cDebes tener una espada en la mano para aplicar encantamientos."
+  unknown-enchantment: "&cEncantamiento desconocido: &f{enchant}&c. Usa &f/swordenchant list&c para ver disponibles."
+  already-has-enchantment: "&cEsta espada ya tiene el encantamiento &f{enchant}&c."
+  enchantment-applied: "&a¡Encantamiento &f{enchant} &aaplicado exitosamente!"
+  
+  # Mensajes específicos de Dash
+  dash-activated: "&b⚡ &aDash activado!"
+  dash-cooldown: "&cDash en cooldown. Espera &f{time} &csegundos."
+  
+  # Mensajes específicos de Ice Aspect
+  ice-aspect-slow: "&b❄ &f{target} &aha sido ralentizado por Ice Aspect!"
+  ice-aspect-jump: "&b❄ &f{target} &aha sido paralizado por Ice Aspect!"
+  ice-aspect-weakness: "&b❄ &f{target} &aha sido debilitado por Ice Aspect!"
+  ice-aspect-target: "&c❄ ¡Has sido afectado por Ice Aspect!"
+  ice-aspect-cage: "&b❄ &f{target} &aha sido encerrado en una celda de hielo!"
+
+# Sistema Anti-AutoArmor mejorado
+anti-autoarmor:
+  enabled: true
+  time-window-ms: 300        # Ventana de tiempo más corta
+  max-equips-per-window: 4   # Máximo 4 piezas de armadura
+  kick-player: true          # Expulsar jugador (false = solo advertencia)
+  kick-message: "&cHas sido expulsado por usar AutoArmor"
+  warning-message: "&cAdvertencia: No uses AutoArmor en este servidor"
+
+# Mensajes del sistema de libros
+messages:
+  need-sword-for-book: "&cNecesitas tener una espada para aplicar este libro de encantamiento."
+  sword-already-has-enchant: "&cEsta espada ya tiene el encantamiento &f{enchant}&c."
+  book-applied: "&a¡Encantamiento &f{enchant} &aaplicado desde el libro!"
+
+# Configuración avanzada
+advanced:
+  debug-mode: false
+  save-cooldowns-on-logout: true

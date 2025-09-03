@@ -1,0 +1,63 @@
+# Configuración del plugin HyserCore
+# Este archivo contiene configuraciones básicas del plugin
+
+plugin:
+  # Nombre del plugin mostrado en mensajes
+  name: "HyserCore"
+  
+  # Versión del plugin
+  version: "1.0.0"
+  
+  # Prefijo usado en mensajes del chat (el principal está en chatgames.yml)
+  prefix: "&7[&bHyserCore&7]&r "
+
+messages:
+  # Mensaje de bienvenida para nuevos jugadores
+  welcome: "&6¡Bienvenido al servidor!"
+  
+  # Mensaje informativo sobre ChatGames
+  chatgames-info: "&eLos ChatGames están activos! Usa /chatgames para más información."
+
+settings:
+  # Mostrar mensaje de bienvenida al conectarse
+  show-welcome-message: true
+  
+  # Habilitar logs detallados
+  debug: false
+  
+  # Mostrar información de ChatGames en el join
+  show-chatgames-info: true
+
+# Configuración de integración con otros plugins
+integrations:
+  # Vault (para economía)
+  vault:
+    enabled: true
+    
+  # PlaceholderAPI (para placeholders)
+  placeholderapi:
+    enabled: false
+
+# Configuración de la base de datos (futuras expansiones)
+database:
+  # Tipo de base de datos: sqlite, mysql
+  type: "sqlite"
+  
+  # Guardar estadísticas en base de datos
+  save-stats: true
+
+# Sistema de LunarWaypoints integrado con UltimateClans
+lunar-waypoints:
+  enabled: true
+  max-waypoints-per-clan: 3
+  messages:
+    prefix: "&8[&bWaypoints&8] "
+    system-disabled: "&cEl sistema de waypoints está deshabilitado."
+    no-permission: "&cNo tienes permisos para usar waypoints."
+    no-clan: "&cDebes estar en un clan para usar waypoints."
+    max-waypoints: "&cTu clan ya tiene el máximo de waypoints permitidos ({max})."
+    waypoint-set: "&a¡Waypoint '{name}' establecido para el clan {clan}!"
+    waypoint-removed: "&cWaypoint eliminado."
+    no-waypoint: "&cNo tienes ningún waypoint establecido."
+    no-waypoints: "&7No hay waypoints establecidos en tu clan."
+    waypoint-info: "&f● &b{player} &7- &e{distance}m &7{direction}"
