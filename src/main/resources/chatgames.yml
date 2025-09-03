@@ -1,0 +1,389 @@
+# ================================
+#        HyserCore ChatGames
+# ================================
+
+# Configuración general
+general:
+  # Habilitar el sistema de chatgames
+  enabled: true
+  
+  # Prefijo usado en todos los mensajes
+  prefix: "&7[&6ChatGames&7] &r"
+  
+  # Intervalo entre chatgames (en segundos)
+  interval:
+    min: 300  # 5 minutos mínimo
+    max: 600  # 10 minutos máximo
+  
+  # Duración de cada chatgame (en segundos)
+  duration: 60
+  
+  # Número mínimo de jugadores online para iniciar un chatgame
+  min-players: 3
+  
+  # Mostrar estadísticas después de cada juego
+  show-stats: true
+
+# Configuración de recompensas
+rewards:
+  # Recompensas por ganar
+  winner:
+    money: 1000
+    experience: 50
+    commands:
+      - "give {player} diamond 3"
+      - "broadcast &a{player} &7ganó el ChatGame!"
+  
+  # Recompensas por participar
+  participation:
+    money: 100
+    experience: 10
+    commands: []
+
+# Tipos de chatgames disponibles
+game-types:
+  # Juegos de matemáticas
+  math:
+    enabled: true
+    weight: 30  # Probabilidad relativa
+    difficulty:
+      easy:
+        operations: ["suma", "resta"]
+        range: [1, 50]
+      medium:
+        operations: ["suma", "resta", "multiplicacion"]
+        range: [1, 100]
+      hard:
+        operations: ["suma", "resta", "multiplicacion", "division"]
+        range: [1, 200]
+  
+  # Juegos de palabras
+  word:
+    enabled: true
+    weight: 25
+    types:
+      - "scramble"    # Palabras desordenadas
+      - "reverse"     # Palabras al revés
+      - "riddle"      # Adivinanzas
+  
+  # Trivia general
+  trivia:
+    enabled: true
+    weight: 20
+    categories:
+      - "general"
+      - "minecraft"
+      - "historia"
+      - "ciencia"
+  
+  # Completar frases
+  complete:
+    enabled: true
+    weight: 15
+  
+  # Adivinanzas de números
+  number:
+    enabled: true
+    weight: 10
+    range: [1, 1000]
+
+# Mensajes del sistema
+messages:
+  # Mensajes de inicio
+  game-starting: "&a¡Un nuevo ChatGame está comenzando!"
+  game-type: "&7Tipo: &e{type}"
+  game-duration: "&7Duración: &c{duration} segundos"
+  game-reward: "&7Recompensa: &6${reward}"
+  
+  # Mensajes durante el juego
+  question: "&e&lPREGUNTA: &f{question}"
+  hint: "&7&lPISTA: &f{hint}"
+  time-left: "&c¡Quedan {time} segundos!"
+  
+  # Mensajes de finalización
+  winner: "&a&l¡GANADOR! &7{player} &arespondió correctamente: &f{answer}"
+  no-winner: "&c¡Nadie respondió correctamente! La respuesta era: &f{answer}"
+  game-ended: "&7El ChatGame ha terminado."
+  
+  # Mensajes de recompensas
+  reward-given: "&a¡Has recibido tu recompensa!"
+  money-reward: "&7Dinero: &a+${amount}"
+  exp-reward: "&7Experiencia: &a+{amount} XP"
+  
+  # Mensajes de comando
+  plugin-reloaded: "&aConfiguración de ChatGames recargada correctamente."
+  no-permission: "&cNo tienes permisos para usar este comando."
+  games-enabled: "&aChatGames han sido habilitados."
+  games-disabled: "&cChatGames han sido deshabilitados."
+  
+  # Mensajes de estadísticas
+  stats-header: "&8&m----------&r &6Estadísticas &8&m----------"
+  stats-games-played: "&7Juegos jugados: &e{games}"
+  stats-games-won: "&7Juegos ganados: &a{wins}"
+  stats-win-rate: "&7Tasa de victoria: &b{rate}%"
+  stats-total-rewards: "&7Recompensas totales: &6${rewards}"
+
+# Base de datos de preguntas
+questions:
+  # Preguntas de matemáticas (se generan automáticamente)
+  math: []
+  
+  # Palabras para juegos de palabras
+  words:
+    - "minecraft"
+    - "creeper"
+    - "enderdragon"
+    - "diamante"
+    - "redstone"
+    - "bloque"
+    - "crafteo"
+    - "survival"
+    - "adventure"
+    - "creative"
+    - "nether"
+    - "portal"
+    - "enchant"
+    - "potion"
+    - "villager"
+    - "zombie"
+    - "skeleton"
+    - "spider"
+    - "enderman"
+    - "ghast"
+    - "pigman"
+    - "blaze"
+    - "wither"
+    - "dragon"
+    - "steve"
+    - "alex"
+    - "notch"
+    - "mojang"
+    - "server"
+    - "plugin"
+    - "comando"
+    - "chat"
+    - "mundo"
+    - "dimensión"
+    - "bioma"
+    - "océano"
+    - "montaña"
+    - "bosque"
+    - "desierto"
+    - "jungla"
+    - "taiga"
+    - "tundra"
+    - "lava"
+    - "agua"
+    - "fuego"
+    - "tierra"
+    - "aire"
+    - "madera"
+    - "piedra"
+    - "hierro"
+    - "oro"
+    - "diamante"
+    - "esmeralda"
+    - "lapislázuli"
+    - "cuarzo"
+    - "obsidiana"
+    - "bedrock"
+    - "grass"
+    - "dirt"
+    - "sand"
+    - "gravel"
+    - "clay"
+    - "snow"
+    - "ice"
+    - "cactus"
+    - "flower"
+    - "tree"
+    - "leaf"
+    - "wood"
+    - "plank"
+    - "stick"
+    - "torch"
+    - "door"
+    - "window"
+    - "fence"
+    - "ladder"
+    - "stairs"
+    - "slab"
+    - "button"
+    - "lever"
+    - "pressure"
+    - "plate"
+    - "rail"
+    - "minecart"
+    - "boat"
+    - "horse"
+    - "pig"
+    - "cow"
+    - "sheep"
+    - "chicken"
+    - "wolf"
+    - "cat"
+    - "ocelot"
+    - "parrot"
+    - "rabbit"
+    - "squid"
+    - "fish"
+    - "salmon"
+    - "cod"
+    - "tropical"
+    - "bread"
+    - "cake"
+    - "cookie"
+    - "apple"
+    - "carrot"
+    - "potato"
+    - "beetroot"
+    - "melon"
+    - "pumpkin"
+    - "wheat"
+    - "seeds"
+    - "sugar"
+    - "egg"
+    - "milk"
+    - "bucket"
+    - "chest"
+    - "furnace"
+    - "anvil"
+    - "table"
+    - "bed"
+    - "banner"
+    - "painting"
+    - "frame"
+    - "sign"
+    - "book"
+    - "paper"
+    - "map"
+    - "compass"
+    - "clock"
+    - "fishing"
+    - "rod"
+    - "bow"
+    - "arrow"
+    - "sword"
+    - "axe"
+    - "pickaxe"
+    - "shovel"
+    - "hoe"
+    - "shears"
+    - "flint"
+    - "steel"
+    - "helmet"
+    - "chestplate"
+    - "leggings"
+    - "boots"
+    - "shield"
+    - "saddle"
+    - "lead"
+    - "name"
+    - "tag"
+  
+  # Preguntas de trivia
+  trivia:
+    general:
+      - question: "¿Cuál es la capital de España?"
+        answer: "madrid"
+        hints: ["Es una ciudad europea", "Empieza por M", "Tiene 6 letras"]
+      - question: "¿Cuántos continentes hay en el mundo?"
+        answer: "7"
+        hints: ["Es un número impar", "Menor que 10", "Siete"]
+      - question: "¿Cuál es el planeta más grande del sistema solar?"
+        answer: "jupiter"
+        hints: ["Es un gigante gaseoso", "Empieza por J", "Tiene una gran mancha roja"]
+      - question: "¿En qué año llegó el hombre a la Luna?"
+        answer: "1969"
+        hints: ["Siglo XX", "Década de los 60", "Neil Armstrong"]
+      - question: "¿Cuál es el océano más grande?"
+        answer: "pacifico"
+        hints: ["Está entre Asia y América", "Su nombre significa 'pacífico'", "Empieza por P"]
+    
+    minecraft:
+      - question: "¿Quién creó Minecraft?"
+        answer: "notch"
+        hints: ["Su nombre real es Markus", "Fundó Mojang", "Sueco"]
+      - question: "¿Cuántos ojos de ender necesitas para activar el portal?"
+        answer: "12"
+        hints: ["Es un número par", "Más de 10", "Doce"]
+      - question: "¿Qué mob explota cuando se acerca a ti?"
+        answer: "creeper"
+        hints: ["Es verde", "Hace 'sss'", "Destruye bloques"]
+      - question: "¿En qué dimensión encuentras al Wither?"
+        answer: "nether"
+        hints: ["Es roja y caliente", "Hay lava por todas partes", "Portal púrpura"]
+      - question: "¿Cuál es el bloque más resistente del juego?"
+        answer: "bedrock"
+        hints: ["No se puede romper", "Está en el fondo del mundo", "Es gris oscuro"]
+    
+    historia:
+      - question: "¿En qué año comenzó la Segunda Guerra Mundial?"
+        answer: "1939"
+        hints: ["Siglo XX", "Década de los 30", "Alemania invadió Polonia"]
+      - question: "¿Quién fue el primer emperador romano?"
+        answer: "augusto"
+        hints: ["Su nombre original era Octavio", "Sobrino de Julio César", "Empieza por A"]
+      - question: "¿En qué año cayó el Imperio Romano de Occidente?"
+        answer: "476"
+        hints: ["Siglo V", "Después de Cristo", "Odoacro depuso a Rómulo"]
+    
+    ciencia:
+      - question: "¿Cuál es el elemento químico más abundante en el universo?"
+        answer: "hidrogeno"
+        hints: ["Es el más ligero", "Su símbolo es H", "Empieza por H"]
+      - question: "¿Cuántos huesos tiene el cuerpo humano adulto?"
+        answer: "206"
+        hints: ["Más de 200", "Menos de 210", "Doscientos seis"]
+      - question: "¿Cuál es la velocidad de la luz?"
+        answer: "300000000"
+        hints: ["300 millones", "Metros por segundo", "Tres seguido de ocho ceros"]
+
+  # Frases para completar
+  complete:
+    - question: "Más vale pájaro en mano que..."
+      answer: "ciento volando"
+      hints: ["Es un refrán", "Habla de números", "Ciento..."]
+    - question: "En casa de herrero, cuchillo de..."
+      answer: "palo"
+      hints: ["Es un refrán", "Material opuesto al metal", "De madera"]
+    - question: "A caballo regalado no se le mira el..."
+      answer: "diente"
+      hints: ["Es un refrán", "Parte de la boca", "Los caballos lo tienen"]
+    - question: "Ojos que no ven, corazón que no..."
+      answer: "siente"
+      hints: ["Es un refrán", "Emoción", "Lo contrario de alegría"]
+    - question: "Agua que no has de beber..."
+      answer: "dejala correr"
+      hints: ["Es un refrán", "Movimiento del agua", "No interferir"]
+
+# Configuración de estadísticas
+statistics:
+  # Habilitar sistema de estadísticas
+  enabled: true
+  
+  # Guardar estadísticas en archivo
+  save-to-file: true
+  
+  # Mostrar ranking de mejores jugadores
+  show-ranking: true
+  
+  # Número de jugadores en el ranking
+  ranking-size: 10
+
+# Configuración avanzada
+advanced:
+  # Habilitar modo debug
+  debug: false
+  
+  # Cancelar chatgames si no hay suficientes jugadores
+  cancel-if-not-enough-players: true
+  
+  # Permitir múltiples respuestas del mismo jugador
+  allow-multiple-answers: false
+  
+  # Tiempo de gracia después de que termine el tiempo (segundos)
+  grace-period: 3
+  
+  # Enviar mensajes solo a jugadores con permisos
+  messages-only-to-permitted: false
