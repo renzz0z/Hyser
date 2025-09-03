@@ -113,15 +113,16 @@ public class IceAspectEnchantment extends SwordEnchantment {
         int minHeight = config.getInt("enchantments.ice-aspect.min-cage-height", 2);
         boolean createGaps = config.getBoolean("enchantments.ice-aspect.create-air-gaps", true);
         
-        Material iceMaterial;
+        Material tempMaterial;
         try {
-            iceMaterial = Material.valueOf(config.getString("enchantments.ice-aspect.ice-material", "PACKED_ICE"));
+            tempMaterial = Material.valueOf(config.getString("enchantments.ice-aspect.ice-material", "PACKED_ICE"));
         } catch (Exception e) {
-            iceMaterial = Material.ICE; // Respaldo para 1.8
+            tempMaterial = Material.ICE; // Respaldo para 1.8
         }
+        final Material iceMaterial = tempMaterial;
         
         List<Location> blocksToPlace = new ArrayList<>();
-        List<Location> originalBlocks = new ArrayList<>();
+        final List<Location> originalBlocks = new ArrayList<>();
         
         // Crear igloo tipo domo MEJORADO
         for (int x = -radius; x <= radius; x++) {
@@ -169,7 +170,7 @@ public class IceAspectEnchantment extends SwordEnchantment {
         }.runTaskLater(plugin, duration * 20L);
     }
     
-    private void destroyIceCage(List<Location> blocks, Material iceMaterial) {
+    private void destroyIceCage(List<Location> blocks, final Material iceMaterial) {
         for (Location loc : blocks) {
             if (loc.getBlock().getType() == iceMaterial) {
                 loc.getBlock().setType(Material.AIR);
