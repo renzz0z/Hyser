@@ -1,0 +1,43 @@
+name: HyserCore
+main: com.hyser.hysercore.HyserCore
+version: '1.0.0'
+description: Sistema completo de ChatGames para Spigot 1.8.8
+author: TuNombre
+website: https://example.com
+api-version: 1.8
+
+commands:
+  chatgames:
+    description: Comando para gestionar los chatgames
+    usage: /<command> [reload]
+    permission: hysercore.admin
+    permission-message: No tienes permisos para usar este comando
+  swordenchant:
+    description: Comando para aplicar encantamientos personalizados a espadas
+    usage: /<command> <tipo>
+    permission: hysercore.swordenchant
+    permission-message: No tienes permisos para usar este comando
+  enchantbook:
+    description: Comando para crear libros de encantamiento
+    usage: /<command> <tipo>
+    permission: hysercore.admin
+    permission-message: No tienes permisos para usar este comando
+  waypoints:
+    description: Comando para gestionar waypoints de clan
+    usage: /<command> [set|list|remove] [nombre]
+    permission: hysercore.waypoints
+    permission-message: No tienes permisos para usar este comando
+
+permissions:
+  hysercore.admin:
+    description: Permisos de administrador para chatgames
+    default: op
+  hysercore.participate:
+    description: Permite participar en chatgames
+    default: true
+  hysercore.swordenchant:
+    description: Permite usar encantamientos de espada
+    default: true
+  hysercore.waypoints:
+    description: Permite usar waypoints de clan
+    default: true

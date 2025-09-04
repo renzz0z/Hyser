@@ -1,0 +1,61 @@
+# ================================
+# CONFIGURACIÓN DE PRISONPUNCH  
+# Plugin: HyserCore v1.0.0
+# Sistema SIMPLE de empuje de flechas
+# ================================
+
+# Estado del sistema
+enabled: true
+
+# Configuración específica para flechas (SOLO EMPUJE)
+arrow:
+  speedMultiplier: 1.5               # Multiplicador de velocidad de flecha (más empuje)
+
+# Configuración de mundos
+worlds:
+  enabled-worlds:                    # Mundos donde está habilitado
+    - "world"
+    - "world_nether"  
+    - "world_the_end"
+    - "prison"
+    - "pvp"
+  disabled-worlds: []                # Mundos deshabilitados
+
+# Configuración específica para prisión
+prison:
+  disableInSafeZones: true           # Deshabilitar en zonas seguras
+  disableInMining: true              # Deshabilitar en zonas de minería
+  enableInPvP: true                  # Habilitar en zonas PvP
+  hitDelay: 5                        # Delay entre disparos (ticks)
+  maxDistance: 50.0                  # Distancia máxima para aplicar empuje
+
+# Mensajes del sistema
+messages:
+  system-enabled: "&aSistema de empuje de flechas habilitado."
+  system-disabled: "&cSistema de empuje de flechas deshabilitado."
+  no-permission: "&cNo tienes permisos para usar este comando."
+  config-reloaded: "&aConfiguración recargada."
+  punch-applied: "&eEmpuje de flecha aplicado a {player}!"
+  arrow-delay-active: "&cDebes esperar antes de disparar nuevamente."
+  safe-zone: "&cNo puedes usar empuje en zonas seguras."
+  mining-zone: "&cNo puedes usar empuje en zonas de minería."
+  
+# Configuración de sonidos
+sounds:
+  punch-hit:
+    enabled: true
+    sound: "SUCCESSFUL_HIT"          # Sonido al acertar flecha
+    volume: 1.0
+    pitch: 1.2
+
+# Configuración de partículas  
+particles:
+  enabled: true
+  punch-effect: "CRIT"             # Partículas al aplicar empuje
+  amount: 10                       # Cantidad de partículas
+  
+# Debug y logs
+debug:
+  enabled: false
+  log-arrows: false                  # Log de empuje de flechas
+  log-calculations: false
