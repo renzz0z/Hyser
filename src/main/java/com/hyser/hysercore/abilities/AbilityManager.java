@@ -6,6 +6,7 @@ import com.hyser.hysercore.abilities.triggers.ItemUseTrigger;
 import org.bukkit.scheduler.BukkitRunnable;
 import java.util.concurrent.ConcurrentHashMap;
 import com.hyser.hysercore.abilities.actions.*;
+import com.hyser.hysercore.abilities.conditions.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
@@ -87,8 +88,9 @@ public class AbilityManager {
                 ability.setActions((List<Object>)(List<?>) actions);
                 actionCache.put(abilityId, actions);
                 
-                // Cargar conditions (si existen) - simplificado para objetos
-                ability.setConditions(new ArrayList<>());
+                // Cargar conditions
+                List<AbilityCondition> conditions = loadConditions(abilitySection);
+                ability.setConditions((List<Object>)(List<?>) conditions);
                 
                 abilities.put(abilityId, ability);
                 loadedCount++;
@@ -167,8 +169,36 @@ public class AbilityManager {
             return conditions;
         }
         
-        // Implementación similar a loadActions pero para condiciones
+        List<Map<?, ?>> conditionsList = abilitySection.getMapList("conditions");
+        for (Map<?, ?> conditionMap : conditionsList) {
+            String type = (String) conditionMap.get("type");
+            if (type == null) continue;
+            
+            // Convertir Map a ConfigurationSection
+            ConfigurationSection conditionConfig = abilityConfig.createSection("temp");
+            for (Map.Entry<?, ?> entry : conditionMap.entrySet()) {
+                conditionConfig.set(entry.getKey().toString(), entry.getValue());
+            }
+            
+            AbilityCondition condition = createCondition(type, conditionConfig);
+            if (condition != null) {
+                conditions.add(condition);
+            }
+        }
+        
         return conditions;
+    }
+    
+    private AbilityCondition createCondition(String type, ConfigurationSection config) {
+        switch (type.toUpperCase()) {
+            case "HEALTH_BELOW":
+                return new HealthBelowCondition(type, config);
+            case "SAFE_LOCATION":
+                return new SafeLocationCondition(type, config);
+            default:
+                plugin.getLogger().warning("Unknown condition type: " + type);
+                return null;
+        }
     }
     
     private AbilityTrigger createTrigger(String type, ConfigurationSection config) {
@@ -204,6 +234,14 @@ public class AbilityManager {
                 return new MessageAction(type, config);
             case "PARTICLE":
                 return new ParticleAction(type, config);
+            case "HEAL":
+                return new HealAction(type, config);
+            case "HEAL_RADIUS":
+                return new HealRadiusAction(type, config);
+            case "TELEPORT":
+                return new TeleportAction(type, config);
+            case "VELOCITY":
+                return new VelocityAction(type, config);
             default:
                 plugin.getLogger().warning("Unknown action type: " + type);
                 return null;
@@ -228,11 +266,31 @@ public class AbilityManager {
                 continue;
             }
             
+            // Verificar condiciones
+            if (!checkConditions(ability, player)) {
+                continue;
+            }
+            
             // Usar cache de triggers para mejor rendimiento
             List<AbilityTrigger> triggers = triggerCache.get(ability.getId());
             if (triggers != null) {
                 for (AbilityTrigger trigger : triggers) {
                     if (trigger.matches(event, player)) {
+                        // Para triggers de items, verificar y consumir uso
+                        if (trigger instanceof ItemUseTrigger) {
+                            ItemUseTrigger itemTrigger = (ItemUseTrigger) trigger;
+                            if (itemTrigger.shouldConsumeUse() && event instanceof org.bukkit.event.player.PlayerInteractEvent) {
+                                org.bukkit.event.player.PlayerInteractEvent interactEvent = (org.bukkit.event.player.PlayerInteractEvent) event;
+                                org.bukkit.inventory.ItemStack item = interactEvent.getItem();
+                                if (item != null) {
+                                    // Consumir uso del objeto
+                                    if (!itemManager.useAbilityItem(player, item, ability.getId())) {
+                                        continue; // No se pudo consumir el uso
+                                    }
+                                }
+                            }
+                        }
+                        
                         // Ejecutar habilidad usando cache de acciones
                         executeAbility(ability, player);
                         
@@ -249,6 +307,23 @@ public class AbilityManager {
         }
         
         return handled;
+    }
+    
+    private boolean checkConditions(Ability ability, Player player) {
+        @SuppressWarnings("unchecked")
+        List<AbilityCondition> conditions = (List<AbilityCondition>)(List<?>) ability.getConditions();
+        
+        if (conditions == null || conditions.isEmpty()) {
+            return true;
+        }
+        
+        for (AbilityCondition condition : conditions) {
+            if (!condition.check(player)) {
+                return false;
+            }
+        }
+        
+        return true;
     }
     
     private boolean isOnCooldown(Player player, String abilityId) {
