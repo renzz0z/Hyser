@@ -3,6 +3,7 @@
 # ===================================================================
 # Sistema completo de objetos consumibles con poderes especiales
 # Cada objeto puede tener múltiples triggers, acciones y condiciones
+# ===================================================================
 
 # Configuración general del sistema
 ability-system:
@@ -11,6 +12,7 @@ ability-system:
   prefix: "&8[&dAbilities&8]&r "
   cooldown-message: "&c¡Debes esperar {cooldown} segundos para usar esta habilidad!"
   no-permission-message: "&c¡No tienes permisos para usar esta habilidad!"
+
 
 # ===================================================================
 #                        GUÍA DE CONFIGURACIÓN
@@ -39,12 +41,17 @@ ability-system:
 # CONDICIONES DISPONIBLES:
 # - HEALTH_BELOW: Solo si vida está por debajo de X
 # - SAFE_LOCATION: Solo en ubicación segura
-#
 # ===================================================================
 
-# Definición de objetos de abilities (consumibles)
+
+
+# ===================================================================
+#                    OBJETOS DE ABILITIES DEFINIDOS
+# ===================================================================
+
 ability-items:
-  
+
+
   # ===================================================================
   #                     TRIGGER: RIGHT_CLICK_ITEM
   # ===================================================================
@@ -83,6 +90,7 @@ ability-items:
       - type: "MESSAGE"  # Acción: Enviar mensaje
         message: "&a¡Ejemplo de click derecho activado!"
 
+
   # ===================================================================
   #                     TRIGGER: DOUBLE_SHIFT
   # ===================================================================
@@ -110,6 +118,7 @@ ability-items:
         y_velocity: 0.3  # Velocidad vertical adicional
       - type: "MESSAGE"
         message: "&6¡Impulso hacia adelante activado!"
+
 
   # ===================================================================
   #                     TRIGGER: COMBO_GIVE
@@ -143,6 +152,7 @@ ability-items:
         duration: 200
       - type: "MESSAGE"
         message: "&4¡COMBO DE ATAQUE ACTIVADO!"
+
 
   # ===================================================================
   #                     TRIGGER: COMBO_RECEIVE
@@ -179,6 +189,7 @@ ability-items:
       - type: "MESSAGE"
         message: "&9¡DEFENSA AUTOMÁTICA ACTIVADA!"
 
+
   # ===================================================================
   #                     TRIGGER: ON_HIT
   # ===================================================================
@@ -210,6 +221,7 @@ ability-items:
         volume: 0.8
         pitch: 1.2
 
+
   # ===================================================================
   #                     TRIGGER: ON_RECEIVE_HIT
   # ===================================================================
@@ -238,6 +250,7 @@ ability-items:
         offset_z: 1.0
       - type: "MESSAGE"
         message: "&5¡Escudo reactivo activado!"
+
 
   # ===================================================================
   #                     ACCIÓN: TELEPORT
@@ -277,6 +290,7 @@ ability-items:
         offset_y: 1.0
         offset_z: 1.0
 
+
   # ===================================================================
   #                     ACCIÓN: HEAL_RADIUS
   # ===================================================================
@@ -313,6 +327,7 @@ ability-items:
       - type: "MESSAGE"
         message: "&d¡Aura de curación activada!"
 
+
   # ===================================================================
   #                     MÚLTIPLES TRIGGERS
   # ===================================================================
@@ -344,9 +359,12 @@ ability-items:
       - type: "MESSAGE"
         message: "&e¡Objeto multi-trigger activado!"
 
+
+
 # ===================================================================
 #                     CONFIGURACIÓN DE TIPOS
 # ===================================================================
+
 
 # Configuración de acciones disponibles
 action-types:
@@ -382,6 +400,7 @@ action-types:
     description: "Envía un mensaje al jugador"
     parameters: ["message"]
 
+
 # Configuración de triggers disponibles
 trigger-types:
   RIGHT_CLICK_ITEM:
@@ -416,6 +435,7 @@ trigger-types:
     description: "Al recibir daño"
     parameters: ["min_damage"]
 
+
 # Configuración de condiciones disponibles
 condition-types:
   HEALTH_BELOW:
@@ -425,6 +445,7 @@ condition-types:
   SAFE_LOCATION:
     description: "Solo en ubicación segura"
     parameters: ["value"]
+
 
 # ===================================================================
 #                     EFECTOS DE POCIÓN DISPONIBLES (1.8.8)
