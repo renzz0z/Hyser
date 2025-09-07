@@ -33,11 +33,8 @@ public abstract class AbilityTrigger {
         return null;
     }
     
-    protected EquipmentSlot getHand(String key) {
+    protected boolean isOffHand(String key) {
         String handName = config.getString(key);
-        if ("OFF_HAND".equalsIgnoreCase(handName)) {
-            return EquipmentSlot.OFF_HAND;
-        }
-        return EquipmentSlot.HAND;
+        return "OFF_HAND".equalsIgnoreCase(handName);
     }
 }

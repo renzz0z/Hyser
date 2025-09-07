@@ -14,4 +14,22 @@ public class PotionEffectAction extends AbilityAction {
     public PotionEffectAction(String type, ConfigurationSection config) {
         super(type, config);
         
-        String effectName = config.getString(\"effect\", \"SPEED\");\n        try {\n            this.effectType = PotionEffectType.getByName(effectName.toUpperCase());\n        } catch (Exception e) {\n            this.effectType = PotionEffectType.SPEED; // fallback\n        }\n        \n        this.amplifier = config.getInt(\"amplifier\", 0);\n        this.duration = config.getInt(\"duration\", 200);\n    }\n    \n    @Override\n    public void execute(Player player) {\n        if (effectType != null) {\n            PotionEffect effect = new PotionEffect(effectType, duration, amplifier);\n            player.addPotionEffect(effect);\n        }\n    }\n}"
+        String effectName = config.getString("effect", "SPEED");
+        try {
+            this.effectType = PotionEffectType.getByName(effectName.toUpperCase());
+        } catch (Exception e) {
+            this.effectType = PotionEffectType.SPEED;
+        }
+        
+        this.amplifier = config.getInt("amplifier", 0);
+        this.duration = config.getInt("duration", 200);
+    }
+    
+    @Override
+    public void execute(Player player) {
+        if (effectType != null) {
+            PotionEffect effect = new PotionEffect(effectType, duration, amplifier);
+            player.addPotionEffect(effect);
+        }
+    }
+}

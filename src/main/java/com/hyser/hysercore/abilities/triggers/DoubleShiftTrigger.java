@@ -15,4 +15,32 @@ public class DoubleShiftTrigger extends AbilityTrigger {
     
     public DoubleShiftTrigger(String type, ConfigurationSection config) {
         super(type, config);
-        this.maxInterval = config.getLong(\"within\", 500); // 500ms por defecto\n    }\n    \n    @Override\n    public boolean matches(Event event, Player player) {\n        if (!(event instanceof PlayerToggleSneakEvent)) {\n            return false;\n        }\n        \n        PlayerToggleSneakEvent sneakEvent = (PlayerToggleSneakEvent) event;\n        if (!sneakEvent.isSneaking()) {\n            return false; // Solo cuando empieza a hacer shift\n        }\n        \n        UUID playerId = player.getUniqueId();\n        long currentTime = System.currentTimeMillis();\n        \n        if (lastShiftTime.containsKey(playerId)) {\n            long timeDiff = currentTime - lastShiftTime.get(playerId);\n            if (timeDiff <= maxInterval) {\n                lastShiftTime.remove(playerId); // Resetear para evitar triple shift\n                return true;\n            }\n        }\n        \n        lastShiftTime.put(playerId, currentTime);\n        return false;\n    }\n}"
+        this.maxInterval = config.getLong("within", 500);
+    }
+    
+    @Override
+    public boolean matches(Event event, Player player) {
+        if (!(event instanceof PlayerToggleSneakEvent)) {
+            return false;
+        }
+        
+        PlayerToggleSneakEvent sneakEvent = (PlayerToggleSneakEvent) event;
+        if (!sneakEvent.isSneaking()) {
+            return false;
+        }
+        
+        UUID playerId = player.getUniqueId();
+        long currentTime = System.currentTimeMillis();
+        
+        if (lastShiftTime.containsKey(playerId)) {
+            long timeDiff = currentTime - lastShiftTime.get(playerId);
+            if (timeDiff <= maxInterval) {
+                lastShiftTime.remove(playerId);
+                return true;
+            }
+        }
+        
+        lastShiftTime.put(playerId, currentTime);
+        return false;
+    }
+}

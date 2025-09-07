@@ -11,4 +11,11 @@ public class MessageAction extends AbilityAction {
     public MessageAction(String type, ConfigurationSection config) {
         super(type, config);
         this.message = ChatColor.translateAlternateColorCodes('&', 
-            config.getString(\"message\", \"&7Habilidad activada!\"));\n    }\n    \n    @Override\n    public void execute(Player player) {\n        player.sendMessage(message);\n    }\n}"
+            config.getString("message", "&7Habilidad activada!"));
+    }
+    
+    @Override
+    public void execute(Player player) {
+        player.sendMessage(message);
+    }
+}

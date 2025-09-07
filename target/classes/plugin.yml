@@ -32,6 +32,12 @@ commands:
     usage: /<command> [on|off|list]
     permission: hysercore.teamviewer
     permission-message: No tienes permisos para usar este comando
+  abilities:
+    description: Comando para gestionar abilities dinámicas
+    usage: /<command> [list|info|reload]
+    permission: hysercore.abilities
+    permission-message: No tienes permisos para usar este comando
+    aliases: [ability, habilidades]
 
 permissions:
   hysercore.admin:
@@ -49,3 +55,16 @@ permissions:
   hysercore.teamviewer:
     description: Permite usar teamviewer lunar
     default: true
+  hysercore.abilities:
+    description: Permite usar comandos de abilities
+    default: true
+  hysercore.ability.*:
+    description: Permite usar todas las abilities
+    default: op
+    children:
+      hysercore.ability.superjump: true
+      hysercore.ability.shadowstep: true
+      hysercore.ability.healing: true
+      hysercore.ability.dash: true
+      hysercore.ability.berserker: true
+      hysercore.ability.nightvision: true

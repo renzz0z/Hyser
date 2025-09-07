@@ -13,4 +13,25 @@ public class SoundAction extends AbilityAction {
     public SoundAction(String type, ConfigurationSection config) {
         super(type, config);
         
-        String soundName = config.getString(\"sound\", \"ENTITY_EXPERIENCE_ORB_PICKUP\");\n        try {\n            this.sound = Sound.valueOf(soundName.toUpperCase());\n        } catch (IllegalArgumentException e) {\n            try {\n                this.sound = Sound.ENTITY_EXPERIENCE_ORB_PICKUP; // fallback\n            } catch (Exception ex) {\n                this.sound = null;\n            }\n        }\n        \n        this.volume = (float) config.getDouble(\"volume\", 1.0);\n        this.pitch = (float) config.getDouble(\"pitch\", 1.0);\n    }\n    \n    @Override\n    public void execute(Player player) {\n        if (sound != null) {\n            player.playSound(player.getLocation(), sound, volume, pitch);\n        }\n    }\n}"
+        String soundName = config.getString("sound", "ENTITY_EXPERIENCE_ORB_PICKUP");
+        try {
+            this.sound = Sound.valueOf(soundName.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            try {
+                this.sound = Sound.ORB_PICKUP;
+            } catch (Exception ex) {
+                this.sound = null;
+            }
+        }
+        
+        this.volume = (float) config.getDouble("volume", 1.0);
+        this.pitch = (float) config.getDouble("pitch", 1.0);
+    }
+    
+    @Override
+    public void execute(Player player) {
+        if (sound != null) {
+            player.playSound(player.getLocation(), sound, volume, pitch);
+        }
+    }
+}

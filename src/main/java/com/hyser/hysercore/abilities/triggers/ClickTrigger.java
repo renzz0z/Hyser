@@ -6,14 +6,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.configuration.ConfigurationSection;
 
 public class ClickTrigger extends AbilityTrigger {
     private Action requiredAction;
     private Material requiredItem;
-    private EquipmentSlot requiredHand;
+    private boolean requireOffHand;
     private boolean requireShift;
     
     public ClickTrigger(String type, ConfigurationSection config) {
@@ -37,4 +36,42 @@ public class ClickTrigger extends AbilityTrigger {
             case "SHIFT_CLICK":
                 this.requireShift = true;
                 break;
-        }\n        \n        this.requiredItem = getMaterial(\"item\");\n        this.requiredHand = getHand(\"hand\");\n    }\n    \n    @Override\n    public boolean matches(Event event, Player player) {\n        if (!(event instanceof PlayerInteractEvent)) {\n            return false;\n        }\n        \n        PlayerInteractEvent interactEvent = (PlayerInteractEvent) event;\n        \n        // Verificar shift si es requerido\n        if (requireShift && !player.isSneaking()) {\n            return false;\n        }\n        \n        // Verificar acción si está especificada\n        if (requiredAction != null) {\n            Action action = interactEvent.getAction();\n            if (action != requiredAction && \n                !(action == Action.RIGHT_CLICK_BLOCK && requiredAction == Action.RIGHT_CLICK_AIR) &&\n                !(action == Action.LEFT_CLICK_BLOCK && requiredAction == Action.LEFT_CLICK_AIR)) {\n                return false;\n            }\n        }\n        \n        // Verificar mano si está especificada\n        if (requiredHand != null && interactEvent.getHand() != requiredHand) {\n            return false;\n        }\n        \n        // Verificar item si está especificado\n        if (requiredItem != null) {\n            ItemStack item = interactEvent.getItem();\n            if (item == null || item.getType() != requiredItem) {\n                return false;\n            }\n        }\n        \n        return true;\n    }\n}"
+        }
+        
+        this.requiredItem = getMaterial("item");
+        this.requireOffHand = isOffHand("hand");
+    }
+    
+    @Override
+    public boolean matches(Event event, Player player) {
+        if (!(event instanceof PlayerInteractEvent)) {
+            return false;
+        }
+        
+        PlayerInteractEvent interactEvent = (PlayerInteractEvent) event;
+        
+        if (requireShift && !player.isSneaking()) {
+            return false;
+        }
+        
+        if (requiredAction != null) {
+            Action action = interactEvent.getAction();
+            if (action != requiredAction && 
+                !(action == Action.RIGHT_CLICK_BLOCK && requiredAction == Action.RIGHT_CLICK_AIR) &&
+                !(action == Action.LEFT_CLICK_BLOCK && requiredAction == Action.LEFT_CLICK_AIR)) {
+                return false;
+            }
+        }
+        
+        // En 1.8.8 no hay getHand(), omitir verificacion de mano
+        
+        if (requiredItem != null) {
+            ItemStack item = interactEvent.getItem();
+            if (item == null || item.getType() != requiredItem) {
+                return false;
+            }
+        }
+        
+        return true;
+    }
+}

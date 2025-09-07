@@ -4,22 +4,32 @@ import org.bukkit.entity.Player;
 import org.bukkit.configuration.ConfigurationSection;
 import java.util.List;
 import java.util.Map;
+import java.util.ArrayList;
 
 public class Ability {
     private String id;
     private String name;
-    private String description;
+    private List<String> description;
     private String permission;
     private int cooldown;
     private boolean enabled;
-    private List<AbilityTrigger> triggers;
-    private List<AbilityAction> actions;
-    private List<AbilityCondition> conditions;
+    private List<Object> triggers;
+    private List<Object> actions;
+    private List<Object> conditions;
     
     public Ability(String id, ConfigurationSection config) {
         this.id = id;
         this.name = config.getString("name", id);
-        this.description = config.getString("description", "");
+        // Soporte para descriptions multilínea
+        if (config.isList("description")) {
+            this.description = config.getStringList("description");
+        } else {
+            this.description = new ArrayList<>();
+            String singleDesc = config.getString("description", "");
+            if (!singleDesc.isEmpty()) {
+                this.description.add(singleDesc);
+            }
+        }
         this.permission = config.getString("permission", "hysercore.ability." + id);
         this.cooldown = config.getInt("cooldown", 0);
         this.enabled = config.getBoolean("enabled", true);
@@ -27,41 +37,37 @@ public class Ability {
     
     public boolean canUse(Player player) {
         if (!enabled) return false;
-        if (permission != null && !player.hasPermission(permission)) return false;
+        // Permisos removidos - todas las abilities disponibles para todos
         
-        // Verificar condiciones
-        if (conditions != null) {
-            for (AbilityCondition condition : conditions) {
-                if (!condition.check(player)) {
-                    return false;
-                }
-            }
-        }
+        // Las condiciones se verifican en el manager
         
         return true;
     }
     
     public void execute(Player player) {
-        if (actions != null) {
-            for (AbilityAction action : actions) {
-                action.execute(player);
-            }
-        }
+        // Las acciones se ejecutan en el manager
     }
     
     // Getters
     public String getId() { return id; }
     public String getName() { return name; }
-    public String getDescription() { return description; }
+    public List<String> getDescription() { return description; }
+    
+    public String getDescriptionAsString() {
+        if (description == null || description.isEmpty()) {
+            return "";
+        }
+        return String.join(" ", description);
+    }
     public String getPermission() { return permission; }
     public int getCooldown() { return cooldown; }
     public boolean isEnabled() { return enabled; }
-    public List<AbilityTrigger> getTriggers() { return triggers; }
-    public List<AbilityAction> getActions() { return actions; }
-    public List<AbilityCondition> getConditions() { return conditions; }
+    public List<Object> getTriggers() { return triggers; }
+    public List<Object> getActions() { return actions; }
+    public List<Object> getConditions() { return conditions; }
     
     // Setters
-    public void setTriggers(List<AbilityTrigger> triggers) { this.triggers = triggers; }
-    public void setActions(List<AbilityAction> actions) { this.actions = actions; }
-    public void setConditions(List<AbilityCondition> conditions) { this.conditions = conditions; }
+    public void setTriggers(List<Object> triggers) { this.triggers = triggers; }
+    public void setActions(List<Object> actions) { this.actions = actions; }
+    public void setConditions(List<Object> conditions) { this.conditions = conditions; }
 }
