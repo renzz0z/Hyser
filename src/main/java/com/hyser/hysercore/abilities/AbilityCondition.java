@@ -17,4 +17,20 @@ public abstract class AbilityCondition {
     public String getType() {
         return type;
     }
+    
+    protected int getInt(String key, int defaultValue) {
+        return config.getInt(key, defaultValue);
+    }
+    
+    protected double getDouble(String key, double defaultValue) {
+        return config.getDouble(key, defaultValue);
+    }
+    
+    protected String getString(String key, String defaultValue) {
+        return config.getString(key, defaultValue);
+    }
+    
+    protected boolean getBoolean(String key, boolean defaultValue) {
+        return config.getBoolean(key, defaultValue);
+    }
 }

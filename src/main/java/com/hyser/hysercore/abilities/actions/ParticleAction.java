@@ -22,11 +22,45 @@ public class ParticleAction extends AbilityAction {
     
     @Override
     public void execute(Player player) {
-        // En Spigot 1.8.8 las particulas se manejan diferente
-        // Se requiere implementacion especifica para 1.8.8
+        // Implementación para Spigot 1.8.8
         if (particleName != null) {
-            // Placeholder para particulas en 1.8.8
-            player.sendMessage("§7[Particles] " + particleName + " spawned!");
+            try {
+                // En 1.8.8 se usa playEffect en lugar de spawnParticle
+                org.bukkit.Effect effect = getEffectFromName(particleName);
+                if (effect != null) {
+                    for (int i = 0; i < amount; i++) {
+                        double x = player.getLocation().getX() + (Math.random() - 0.5) * offsetX * 2;
+                        double y = player.getLocation().getY() + Math.random() * offsetY;
+                        double z = player.getLocation().getZ() + (Math.random() - 0.5) * offsetZ * 2;
+                        
+                        org.bukkit.Location particleLoc = new org.bukkit.Location(player.getWorld(), x, y, z);
+                        player.getWorld().playEffect(particleLoc, effect, 0);
+                    }
+                }
+            } catch (Exception e) {
+                // Fallback silencioso para partículas no soportadas
+            }
+        }
+    }
+    
+    private org.bukkit.Effect getEffectFromName(String name) {
+        switch (name.toUpperCase()) {
+            case "CLOUD":
+            case "EXPLOSION":
+                return org.bukkit.Effect.CLOUD;
+            case "SMOKE":
+                return org.bukkit.Effect.SMOKE;
+            case "FLAME":
+            case "FIRE":
+                return org.bukkit.Effect.MOBSPAWNER_FLAMES;
+            case "HEART":
+                return org.bukkit.Effect.HEART;
+            case "PORTAL":
+                return org.bukkit.Effect.ENDER_SIGNAL;
+            case "REDSTONE":
+                return org.bukkit.Effect.POTION_BREAK;
+            default:
+                return org.bukkit.Effect.CLOUD;
         }
     }
 }
