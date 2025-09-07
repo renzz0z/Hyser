@@ -25,6 +25,9 @@ import com.hyser.hysercore.waypoints.LunarWaypoints;
 import com.hyser.hysercore.waypoints.WaypointsCommand;
 import com.hyser.hysercore.teamviewer.LunarTeamViewer;
 import com.hyser.hysercore.teamviewer.TeamViewerCommand;
+import com.hyser.hysercore.abilities.AbilityManager;
+import com.hyser.hysercore.abilities.AbilityListener;
+import com.hyser.hysercore.abilities.AbilityCommand;
 
 import java.io.File;
 import java.io.IOException;
@@ -38,6 +41,7 @@ public class HyserCore extends JavaPlugin implements Listener {
     private SwordEnchantmentManager enchantmentManager;
     private LunarWaypoints waypointManager;
     private LunarTeamViewer teamViewerManager;
+    private AbilityManager abilityManager;
 
     @Override
     public void onEnable() {
@@ -69,6 +73,10 @@ public class HyserCore extends JavaPlugin implements Listener {
         // Inicializar sistema de LunarTeamViewer NUEVO
         teamViewerManager = new LunarTeamViewer(this);
         
+        // Inicializar sistema de Abilities NUEVO
+        abilityManager = new AbilityManager(this);
+        getServer().getPluginManager().registerEvents(new AbilityListener(abilityManager), this);
+        
         
         // Registrar comandos
         chatGamesCommand = new ChatGamesCommand(this, gameManager);
@@ -91,6 +99,10 @@ public class HyserCore extends JavaPlugin implements Listener {
         getCommand("teamviewer").setExecutor(teamViewerCommand);
         getCommand("teamviewer").setTabCompleter(teamViewerCommand);
         
+        AbilityCommand abilityCommand = new AbilityCommand(this, abilityManager);
+        getCommand("abilities").setExecutor(abilityCommand);
+        getCommand("abilities").setTabCompleter(abilityCommand);
+        
         
         // Mensaje de inicio
         getLogger().info("=================================");
@@ -101,6 +113,7 @@ public class HyserCore extends JavaPlugin implements Listener {
         getLogger().info("Sistema de Sword Enchantments cargado.");
         getLogger().info("Sistema de LunarWaypoints cargado.");
         getLogger().info("Sistema de LunarTeamViewer cargado.");
+        getLogger().info("Sistema de Abilities Dinámicas cargado.");
         
         boolean enabled = chatGamesConfig.getBoolean("general.enabled", true);
         getLogger().info("ChatGames: " + (enabled ? "HABILITADO" : "DESHABILITADO"));
@@ -302,6 +315,10 @@ public class HyserCore extends JavaPlugin implements Listener {
     
     public LunarTeamViewer getTeamViewerManager() {
         return teamViewerManager;
+    }
+    
+    public AbilityManager getAbilityManager() {
+        return abilityManager;
     }
     
     
