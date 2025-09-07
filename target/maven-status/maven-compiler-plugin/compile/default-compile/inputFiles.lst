@@ -51,3 +51,4 @@
 /home/runner/workspace/src/main/java/com/hyser/hysercore/abilities/actions/ParticleAction.java
 /home/runner/workspace/src/main/java/com/hyser/hysercore/abilities/AbilityCondition.java
 /home/runner/workspace/src/main/java/com/hyser/hysercore/abilities/conditions/HealthBelowCondition.java
+/home/runner/workspace/src/main/java/com/hyser/hysercore/abilities/triggers/ComboTrigger.java

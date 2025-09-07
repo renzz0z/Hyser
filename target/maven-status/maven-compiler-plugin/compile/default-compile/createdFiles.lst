@@ -41,6 +41,7 @@ com/hyser/hysercore/enchantments/listeners/SwordEnchantmentListener.class
 com/hyser/hysercore/teamviewer/LunarTeamViewer.class
 com/hyser/hysercore/games/NumberGame.class
 com/hyser/hysercore/games/WordGame.class
+com/hyser/hysercore/abilities/triggers/ComboTrigger.class
 com/hyser/hysercore/managers/ChatGameManager$5.class
 com/hyser/hysercore/abilities/triggers/ItemUseTrigger.class
 com/hyser/hysercore/waypoints/WaypointsCommand.class
