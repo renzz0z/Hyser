@@ -218,6 +218,9 @@ public class AbilityManager {
                 return new CombatTrigger(type, config);
             case "RIGHT_CLICK_ITEM":
                 return new ItemUseTrigger(type, config);
+            case "COMBO_GIVE":
+            case "COMBO_RECEIVE":
+                return new com.hyser.hysercore.abilities.triggers.ComboTrigger(type, config);
             default:
                 plugin.getLogger().warning("Unknown trigger type: " + type);
                 return null;

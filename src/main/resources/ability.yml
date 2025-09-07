@@ -22,7 +22,7 @@ ability-items:
       - "&e¡Click derecho para usar!"
     item:
       material: "POTION"
-      data: 8194  # Botella de salto
+      data: 8194  
     uses: 3  # Se puede usar 3 veces antes de romperse
     cooldown: 10
     triggers:
@@ -222,16 +222,108 @@ ability-items:
       - type: "RIGHT_CLICK_ITEM"
         consume_use: true
     actions:
-      - type: "TOGGLE_EFFECT"
+      - type: "POTION_EFFECT"
         effect: "NIGHT_VISION"
         amplifier: 1
-        duration: -1
+        duration: 600
       - type: "SOUND"
         sound: "BLOCK_LEVER_CLICK"
         volume: 0.5
         pitch: 1.0
       - type: "MESSAGE"
-        message: "&b¡Visión nocturna {status}!"
+        message: "&b¡Visión nocturna activada!"
+
+  # Ejemplo 7: Objeto de Combo - Rabia del Guerrero
+  warrior_rage:
+    enabled: true
+    name: "&4Rabia del Guerrero"
+    description:
+      - "&7Amuleto que se activa cuando"
+      - "&7das 5 golpes consecutivos"
+      - "&c¡Desata tu furia interior!"
+    item:
+      material: "NETHER_STAR"
+    uses: 3
+    cooldown: 20
+    triggers:
+      - type: "COMBO_GIVE"
+        required_hits: 5
+        reset_time: 3000
+        consume_use: true
+    actions:
+      - type: "POTION_EFFECT"
+        effect: "INCREASE_DAMAGE"
+        amplifier: 2
+        duration: 200
+      - type: "POTION_EFFECT"
+        effect: "SPEED"
+        amplifier: 1
+        duration: 200
+      - type: "POTION_EFFECT"
+        effect: "DAMAGE_RESISTANCE"
+        amplifier: 1
+        duration: 100
+      - type: "SOUND"
+        sound: "ENTITY_ENDER_DRAGON_GROWL"
+        volume: 1.0
+        pitch: 0.8
+      - type: "PARTICLE"
+        particle: "REDSTONE"
+        amount: 20
+        offset_x: 1.0
+        offset_y: 1.0
+        offset_z: 1.0
+      - type: "MESSAGE"
+        message: "&4¡RABIA DEL GUERRERO ACTIVADA!"
+
+  # Ejemplo 8: Objeto de Combo Defensivo - Escudo Vengativo
+  vengeful_shield:
+    enabled: true
+    name: "&9Escudo Vengativo"
+    description:
+      - "&7Escudo mágico que se activa"
+      - "&7cuando recibes 4 golpes"
+      - "&9¡La venganza será tuya!"
+    item:
+      material: "SHIELD"
+    uses: 2
+    cooldown: 30
+    triggers:
+      - type: "COMBO_RECEIVE"
+        required_hits: 4
+        reset_time: 5000
+        consume_use: true
+    conditions:
+      - type: "HEALTH_BELOW"
+        value: 15.0
+    actions:
+      - type: "HEAL"
+        amount: 6.0
+        target: "SELF"
+      - type: "POTION_EFFECT"
+        effect: "DAMAGE_RESISTANCE"
+        amplifier: 2
+        duration: 100
+      - type: "POTION_EFFECT"
+        effect: "REGENERATION"
+        amplifier: 1
+        duration: 60
+      - type: "VELOCITY"
+        direction: "UP"
+        strength: 1.0
+        y_velocity: 0.8
+      - type: "SOUND"
+        sound: "ENTITY_IRON_GOLEM_HURT"
+        volume: 1.0
+        pitch: 0.5
+      - type: "PARTICLE"
+        particle: "CLOUD"
+        amount: 30
+        offset_x: 2.0
+        offset_y: 1.0
+        offset_z: 2.0
+      - type: "MESSAGE"
+        message: "&9¡ESCUDO VENGATIVO ACTIVADO!"
 
 # Configuración de acciones disponibles
 action-types:
