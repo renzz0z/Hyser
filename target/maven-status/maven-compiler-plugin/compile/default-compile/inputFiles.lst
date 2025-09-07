@@ -11,10 +11,10 @@
 /home/runner/workspace/src/main/java/com/hyser/hysercore/enchantments/types/ExecutionerEnchantment.java
 /home/runner/workspace/src/main/java/com/hyser/hysercore/enchantments/types/ExplosiveEnchantment.java
 /home/runner/workspace/src/main/java/com/hyser/hysercore/abilities/triggers/ClickTrigger.java
+/home/runner/workspace/src/main/java/com/hyser/hysercore/HyserCore.java
 /home/runner/workspace/src/main/java/com/hyser/hysercore/abilities/AbilityListener.java
 /home/runner/workspace/src/main/java/com/hyser/hysercore/enchantments/types/BleedingEnchantment.java
 /home/runner/workspace/src/main/java/com/hyser/hysercore/managers/ChatGameManager.java
-/home/runner/workspace/src/main/java/com/hyser/hysercore/HyserCore.java
 /home/runner/workspace/src/main/java/com/hyser/hysercore/enchantments/listeners/AntiAutoArmorListener.java
 /home/runner/workspace/src/main/java/com/hyser/hysercore/games/MathGame.java
 /home/runner/workspace/src/main/java/com/hyser/hysercore/enchantments/listeners/EnchantmentBookListener.java

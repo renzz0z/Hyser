@@ -133,4 +133,4 @@ public class ItemAbilityManager {
     public FileConfiguration getAbilityConfig() {
         return abilityManager.getAbilityConfigFile();
     }
-}"
+}

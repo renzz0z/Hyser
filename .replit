@@ -29,6 +29,6 @@ outputType = "console"
 channel = "stable-25_05"
 
 [deployment]
-deploymentTarget = "scheduled"
-run = ["ls", "-la", "target/hysercore-1.0.0.jar"]
+deploymentTarget = "autoscale"
+run = ["echo", "This is a Minecraft Spigot plugin JAR file. To use: 1) Place target/hysercore-1.0.0.jar in your Minecraft server's plugins/ directory 2) Start your Spigot 1.8.8 server 3) The plugin will initialize automatically"]
 build = ["mvn", "clean", "package", "-DskipTests"]

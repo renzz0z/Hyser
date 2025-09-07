@@ -92,12 +92,33 @@ HyserCore es un plugin completo de Minecraft desarrollado para Spigot 1.8.8 que 
 - `hysercore.teamviewer` - Usar teamviewer lunar
 - `hysercore.prisonpunch` - Gestionar sistema de punch para prisión
 
+## Entorno de Desarrollo Replit
+
+### Estado del Proyecto
+- **CONFIGURADO**: Entorno Java con GraalVM 19 (compatible con Java 8)
+- **CONFIGURADO**: Maven 3.8.6 para compilación automática
+- **CONFIGURADO**: Workflow de build que genera `hysercore-1.0.0.jar`
+- **CONFIGURADO**: Configuración de deployment para distribución
+- **CORREGIDO**: Error de sintaxis en ItemAbilityManager.java
+
+### Compilación
+```bash
+mvn clean package -DskipTests
+```
+El archivo JAR se genera en: `target/hysercore-1.0.0.jar`
+
+### Para Usar el Plugin
+1. Compilar usando el workflow "Build HyserCore" o comando Maven
+2. Copiar `target/hysercore-1.0.0.jar` a la carpeta `plugins/` de tu servidor Spigot 1.8.8
+3. Reiniciar el servidor Minecraft
+4. El plugin se iniciará automáticamente
+
 ## Compatibilidad
 
 - **Spigot**: 1.8.8 (optimizado)
-- **Java**: 8+
+- **Java**: 8+ (compilado y probado con GraalVM 19)
 - **Dependencias Opcionales**: UltimateClans (para waypoints y teamviewer)
-- **Maven**: 3.6+
+- **Maven**: 3.6+ (usando 3.8.6 en Replit)
 
 ## Instalación y Uso
 

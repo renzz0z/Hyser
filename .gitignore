@@ -1,0 +1,70 @@
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
+# Java
+*.class
+*.log
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+hs_err_pid*
+
+# IDE
+.idea/
+*.iws
+*.iml
+*.ipr
+.vscode/
+.eclipse/
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Minecraft/Spigot
+plugins/
+logs/
+server.properties
+banned-players.json
+banned-ips.json
+bukkit.yml
+spigot.yml
+paper.yml
+ops.json
+whitelist.json
+usercache.json
+usernamecache.json
+world/
+world_nether/
+world_the_end/
+
+# Config files that shouldn't be tracked
+config.yml
+chatgames.yml
+swordenchants.yml
+ability.yml
+
+# But keep default config files
+!src/main/resources/config.yml
+!src/main/resources/chatgames.yml
+!src/main/resources/swordenchants.yml
+!src/main/resources/ability.yml
+!src/main/resources/plugin.yml
