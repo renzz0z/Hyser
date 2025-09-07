@@ -1,0 +1,275 @@
+# Configuración de Abilities Dinámicas - HyserCore
+# Sistema de habilidades completamente configurable al estilo Lazarus
+
+# Configuración general del sistema
+ability-system:
+  enabled: true
+  debug: false
+  prefix: "&8[&dAbilities&8]&r "
+  cooldown-message: "&c¡Debes esperar {cooldown} segundos para usar esta habilidad!"
+  no-permission-message: "&c¡No tienes permisos para usar esta habilidad!"
+
+# Definición de abilities configurables
+abilities:
+  
+  # Ejemplo 1: Salto Mejorado (Jump Boost)
+  super_jump:
+    enabled: true
+    name: "&aSalto Supremo"
+    description: "&7Te permite saltar más alto por un tiempo"
+    permission: "hysercore.ability.superjump"
+    cooldown: 15
+    triggers:
+      - type: "SHIFT_CLICK"
+        item: "FEATHER"
+        hand: "MAIN_HAND"
+    actions:
+      - type: "POTION_EFFECT"
+        effect: "JUMP"
+        amplifier: 3
+        duration: 100
+      - type: "POTION_EFFECT"
+        effect: "SPEED"
+        amplifier: 1
+        duration: 100
+      - type: "SOUND"
+        sound: "ENTITY_ENDER_DRAGON_FLAP"
+        volume: 1.0
+        pitch: 1.5
+      - type: "PARTICLE"
+        particle: "CLOUD"
+        amount: 20
+        offset_x: 1.0
+        offset_y: 0.5
+        offset_z: 1.0
+      - type: "MESSAGE"
+        message: "&a¡Has activado Salto Supremo!"
+
+  # Ejemplo 2: Teletransporte
+  shadow_step:
+    enabled: true
+    name: "&8Paso de Sombra"
+    description: "&7Te teletransporta hacia donde miras"
+    permission: "hysercore.ability.shadowstep"
+    cooldown: 20
+    triggers:
+      - type: "RIGHT_CLICK"
+        item: "ENDER_PEARL"
+        hand: "MAIN_HAND"
+    conditions:
+      - type: "MAX_DISTANCE"
+        value: 15
+      - type: "SAFE_LOCATION"
+        value: true
+    actions:
+      - type: "TELEPORT"
+        target: "LOOKING_AT"
+        max_distance: 15
+        safe: true
+      - type: "SOUND"
+        sound: "ENTITY_ENDERMAN_TELEPORT"
+        volume: 1.0
+        pitch: 1.0
+      - type: "PARTICLE"
+        particle: "PORTAL"
+        amount: 30
+        offset_x: 1.0
+        offset_y: 1.0
+        offset_z: 1.0
+      - type: "CONSUME_ITEM"
+        amount: 1
+
+  # Ejemplo 3: Curación
+  healing_aura:
+    enabled: true
+    name: "&dAura de Curación"
+    description: "&7Cura a ti y a jugadores cercanos"
+    permission: "hysercore.ability.healing"
+    cooldown: 30
+    triggers:
+      - type: "SHIFT_RIGHT_CLICK"
+        item: "GOLDEN_APPLE"
+        hand: "MAIN_HAND"
+    actions:
+      - type: "HEAL"
+        amount: 4.0
+        target: "SELF"
+      - type: "HEAL_RADIUS"
+        amount: 2.0
+        radius: 5.0
+        target: "NEARBY_PLAYERS"
+      - type: "POTION_EFFECT_RADIUS"
+        effect: "REGENERATION"
+        amplifier: 1
+        duration: 100
+        radius: 5.0
+        target: "NEARBY_PLAYERS"
+      - type: "PARTICLE_RADIUS"
+        particle: "HEART"
+        amount: 15
+        radius: 5.0
+        offset_y: 1.0
+      - type: "SOUND_RADIUS"
+        sound: "ENTITY_EXPERIENCE_ORB_PICKUP"
+        volume: 1.0
+        pitch: 1.2
+        radius: 5.0
+      - type: "MESSAGE_RADIUS"
+        message: "&d¡Has sido curado por un aura de curación!"
+        radius: 5.0
+
+  # Ejemplo 4: Dash/Impulso
+  lightning_dash:
+    enabled: true
+    name: "&eRayo Veloz"
+    description: "&7Te impulsa hacia adelante rápidamente"
+    permission: "hysercore.ability.dash"
+    cooldown: 10
+    triggers:
+      - type: "DOUBLE_SHIFT"
+        within: 500
+    actions:
+      - type: "VELOCITY"
+        direction: "FORWARD"
+        strength: 2.0
+        y_velocity: 0.3
+      - type: "POTION_EFFECT"
+        effect: "SPEED"
+        amplifier: 2
+        duration: 40
+      - type: "PARTICLE_TRAIL"
+        particle: "FIREWORKS_SPARK"
+        amount: 5
+        duration: 20
+      - type: "SOUND"
+        sound: "ENTITY_LIGHTNING_BOLT_THUNDER"
+        volume: 0.5
+        pitch: 2.0
+
+  # Ejemplo 5: Habilidad de Combate
+  berserker_rage:
+    enabled: true
+    name: "&4Furia Berserker"
+    description: "&7Aumenta tu daño y resistencia temporalmente"
+    permission: "hysercore.ability.berserker"
+    cooldown: 45
+    triggers:
+      - type: "SHIFT_LEFT_CLICK"
+        item: "DIAMOND_SWORD"
+        hand: "MAIN_HAND"
+    conditions:
+      - type: "HEALTH_BELOW"
+        value: 10.0
+    actions:
+      - type: "POTION_EFFECT"
+        effect: "INCREASE_DAMAGE"
+        amplifier: 2
+        duration: 200
+      - type: "POTION_EFFECT"
+        effect: "DAMAGE_RESISTANCE"
+        amplifier: 1
+        duration: 200
+      - type: "POTION_EFFECT"
+        effect: "SPEED"
+        amplifier: 1
+        duration: 200
+      - type: "PARTICLE_AURA"
+        particle: "REDSTONE"
+        amount: 3
+        duration: 200
+        radius: 1.0
+        color_red: 255
+        color_green: 0
+        color_blue: 0
+      - type: "SOUND"
+        sound: "ENTITY_GHAST_SCREAM"
+        volume: 1.0
+        pitch: 0.8
+      - type: "MESSAGE"
+        message: "&4¡Tu furia ha despertado!"
+
+  # Ejemplo 6: Habilidad de Utilidad
+  night_vision:
+    enabled: true
+    name: "&bVisión Nocturna"
+    description: "&7Te permite ver en la oscuridad"
+    permission: "hysercore.ability.nightvision"
+    cooldown: 5
+    triggers:
+      - type: "LEFT_CLICK"
+        item: "TORCH"
+        hand: "MAIN_HAND"
+    actions:
+      - type: "TOGGLE_EFFECT"
+        effect: "NIGHT_VISION"
+        amplifier: 1
+        duration: -1
+      - type: "SOUND"
+        sound: "BLOCK_LEVER_CLICK"
+        volume: 0.5
+        pitch: 1.0
+      - type: "MESSAGE"
+        message: "&b¡Visión nocturna {status}!"
+
+# Configuración de acciones disponibles
+action-types:
+  # Efectos de poción
+  POTION_EFFECT:
+    description: "Aplica un efecto de poción"
+    parameters: ["effect", "amplifier", "duration"]
+    
+  # Curación
+  HEAL:
+    description: "Cura al objetivo"
+    parameters: ["amount", "target"]
+    
+  # Sonido
+  SOUND:
+    description: "Reproduce un sonido"
+    parameters: ["sound", "volume", "pitch"]
+    
+  # Partículas
+  PARTICLE:
+    description: "Genera partículas"
+    parameters: ["particle", "amount", "offset_x", "offset_y", "offset_z"]
+    
+  # Teletransporte
+  TELEPORT:
+    description: "Teletransporta al jugador"
+    parameters: ["target", "max_distance", "safe"]
+    
+  # Velocidad/Impulso
+  VELOCITY:
+    description: "Aplica velocidad al jugador"
+    parameters: ["direction", "strength", "y_velocity"]
+    
+  # Mensaje
+  MESSAGE:
+    description: "Envía un mensaje al jugador"
+    parameters: ["message"]
+
+# Configuración de triggers disponibles
+trigger-types:
+  RIGHT_CLICK:
+    description: "Click derecho con ítem"
+    parameters: ["item", "hand"]
+    
+  LEFT_CLICK:
+    description: "Click izquierdo con ítem"
+    parameters: ["item", "hand"]
+    
+  SHIFT_CLICK:
+    description: "Shift + Click con ítem"
+    parameters: ["item", "hand"]
+    
+  DOUBLE_SHIFT:
+    description: "Doble shift rápido"
+    parameters: ["within"]
+    
+  ON_DAMAGE:
+    description: "Al recibir daño"
+    parameters: ["min_damage"]
+    
+  ON_KILL:
+    description: "Al matar un mob/jugador"
+    parameters: ["entity_type"]
