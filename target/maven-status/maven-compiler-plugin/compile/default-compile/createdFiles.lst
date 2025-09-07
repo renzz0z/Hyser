@@ -1,8 +1,9 @@
+com/hyser/hysercore/abilities/actions/TeleportAction.class
 com/hyser/hysercore/enchantments/types/BleedingEnchantment.class
 com/hyser/hysercore/abilities/AbilityTrigger.class
-com/hyser/hysercore/enchantments/types/IceAspectEnchantment.class
 com/hyser/hysercore/managers/ChatGameManager$3.class
 com/hyser/hysercore/commands/ChatGamesCommand.class
+com/hyser/hysercore/enchantments/types/IceAspectEnchantment.class
 com/hyser/hysercore/enchantments/types/SharpnessEnchantment.class
 com/hyser/hysercore/abilities/actions/MessageAction.class
 com/hyser/hysercore/enchantments/types/SwordEnchantment.class
@@ -13,14 +14,16 @@ com/hyser/hysercore/HyserCore.class
 com/hyser/hysercore/enchantments/managers/SwordEnchantmentManager.class
 com/hyser/hysercore/waypoints/LunarWaypoints$WaypointData.class
 com/hyser/hysercore/apples/AppleManager.class
-com/hyser/hysercore/abilities/triggers/CombatTrigger.class
 com/hyser/hysercore/abilities/Ability.class
+com/hyser/hysercore/abilities/triggers/CombatTrigger.class
 com/hyser/hysercore/enchantments/listeners/EnchantmentBookListener.class
 com/hyser/hysercore/enchantments/types/VampireEnchantment.class
 com/hyser/hysercore/managers/ChatGameManager.class
 com/hyser/hysercore/managers/ChatGameManager$4.class
+com/hyser/hysercore/abilities/conditions/SafeLocationCondition.class
 com/hyser/hysercore/enchantments/commands/SwordEnchantCommand.class
 com/hyser/hysercore/games/MathGame.class
+com/hyser/hysercore/abilities/actions/VelocityAction.class
 com/hyser/hysercore/enchantments/types/LifestealEnchantment.class
 com/hyser/hysercore/enchantments/listeners/AntiAutoArmorListener.class
 com/hyser/hysercore/abilities/triggers/ClickTrigger.class
@@ -28,6 +31,8 @@ com/hyser/hysercore/enchantments/listeners/AntiAutoArmorListener$ArmorChangeTrac
 com/hyser/hysercore/waypoints/LunarWaypoints$1.class
 com/hyser/hysercore/abilities/actions/PotionEffectAction.class
 com/hyser/hysercore/managers/ChatGameManager$1.class
+com/hyser/hysercore/abilities/actions/HealRadiusAction.class
+com/hyser/hysercore/abilities/actions/HealAction.class
 com/hyser/hysercore/abilities/actions/ParticleAction.class
 com/hyser/hysercore/enchantments/types/ExecutionerEnchantment.class
 com/hyser/hysercore/abilities/AbilityAction.class
@@ -54,5 +59,6 @@ com/hyser/hysercore/abilities/AbilityCondition.class
 com/hyser/hysercore/waypoints/LunarWaypoints.class
 com/hyser/hysercore/abilities/ItemAbilityManager.class
 com/hyser/hysercore/enchantments/types/BleedingEnchantment$1.class
+com/hyser/hysercore/abilities/conditions/HealthBelowCondition.class
 com/hyser/hysercore/games/TriviaGame.class
 com/hyser/hysercore/games/ChatGame.class
