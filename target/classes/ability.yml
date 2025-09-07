@@ -1,5 +1,8 @@
-# Configuración de Objetos de Abilities - HyserCore
-# Sistema de objetos consumibles con poderes especiales
+# ===================================================================
+#                    HYSERCORE - SISTEMA DE ABILITIES
+# ===================================================================
+# Sistema completo de objetos consumibles con poderes especiales
+# Cada objeto puede tener múltiples triggers, acciones y condiciones
 
 # Configuración general del sistema
 ability-system:
@@ -9,381 +12,443 @@ ability-system:
   cooldown-message: "&c¡Debes esperar {cooldown} segundos para usar esta habilidad!"
   no-permission-message: "&c¡No tienes permisos para usar esta habilidad!"
 
+# ===================================================================
+#                        GUÍA DE CONFIGURACIÓN
+# ===================================================================
+# 
+# TRIGGERS DISPONIBLES:
+# - RIGHT_CLICK_ITEM: Click derecho con el objeto
+# - LEFT_CLICK: Click izquierdo general
+# - SHIFT_CLICK: Shift + Click
+# - DOUBLE_SHIFT: Doble shift rápido
+# - COMBO_GIVE: Al dar X hits consecutivos
+# - COMBO_RECEIVE: Al recibir X hits consecutivos
+# - ON_HIT: Al pegar a alguien
+# - ON_RECEIVE_HIT: Al recibir daño
+#
+# ACCIONES DISPONIBLES:
+# - POTION_EFFECT: Aplicar efecto de poción
+# - HEAL: Curar jugador
+# - HEAL_RADIUS: Curar en área
+# - TELEPORT: Teletransportar
+# - VELOCITY: Aplicar impulso/velocidad
+# - SOUND: Reproducir sonido
+# - PARTICLE: Mostrar partículas
+# - MESSAGE: Enviar mensaje
+#
+# CONDICIONES DISPONIBLES:
+# - HEALTH_BELOW: Solo si vida está por debajo de X
+# - SAFE_LOCATION: Solo en ubicación segura
+#
+# ===================================================================
+
 # Definición de objetos de abilities (consumibles)
 ability-items:
   
-  # Ejemplo 1: Botella de Salto Supremo
-  super_jump_bottle:
+  # ===================================================================
+  #                     TRIGGER: RIGHT_CLICK_ITEM
+  # ===================================================================
+  # Trigger más común - se activa al hacer click derecho con el objeto
+  
+  example_right_click:
     enabled: true
-    name: "&aBottella de Salto Supremo"
+    name: "&aEjemplo Click Derecho"
     description: 
-      - "&7Botella mágica que otorga"
-      - "&7poderes de salto por un tiempo"
-      - "&e¡Click derecho para usar!"
+      - "&7Objeto que se activa con"
+      - "&7click derecho"
+      - "&eDemuestra: POTION_EFFECT, SOUND, PARTICLE"
     item:
       material: "POTION"
-      data: 8194  
-    uses: 3  # Se puede usar 3 veces antes de romperse
+      data: 8194
+    uses: 5
     cooldown: 10
     triggers:
-      - type: "RIGHT_CLICK_ITEM"
-        consume_use: true  # Consume un uso del objeto
+      - type: "RIGHT_CLICK_ITEM"  # Se activa con click derecho
+        consume_use: true  # Consume un uso cada activación
     actions:
-      - type: "POTION_EFFECT"
-        effect: "JUMP"
-        amplifier: 3
-        duration: 100
-      - type: "POTION_EFFECT"
-        effect: "SPEED"
-        amplifier: 1
-        duration: 100
-      - type: "SOUND"
-        sound: "ENTITY_ENDER_DRAGON_FLAP"
-        volume: 1.0
-        pitch: 1.5
-      - type: "PARTICLE"
-        particle: "CLOUD"
-        amount: 20
-        offset_x: 1.0
-        offset_y: 0.5
-        offset_z: 1.0
-      - type: "MESSAGE"
-        message: "&a¡Has activado Salto Supremo!"
+      - type: "POTION_EFFECT"  # Acción: Aplicar efecto de poción
+        effect: "JUMP"  # Tipo de efecto
+        amplifier: 2  # Nivel del efecto (0 = nivel 1)
+        duration: 100  # Duración en ticks (20 ticks = 1 segundo)
+      - type: "SOUND"  # Acción: Reproducir sonido
+        sound: "ORB_PICKUP"  # Sonido compatible con 1.8.8
+        volume: 1.0  # Volumen (0.0 - 2.0)
+        pitch: 1.5  # Tono (0.5 - 2.0)
+      - type: "PARTICLE"  # Acción: Mostrar partículas
+        particle: "CLOUD"  # Tipo de partícula
+        amount: 15  # Cantidad de partículas
+        offset_x: 1.0  # Dispersión en X
+        offset_y: 0.5  # Dispersión en Y
+        offset_z: 1.0  # Dispersión en Z
+      - type: "MESSAGE"  # Acción: Enviar mensaje
+        message: "&a¡Ejemplo de click derecho activado!"
 
-  # Ejemplo 2: Perla de Teletransporte
-  teleport_pearl:
+  # ===================================================================
+  #                     TRIGGER: DOUBLE_SHIFT
+  # ===================================================================
+  # Se activa al hacer doble shift rápidamente
+  
+  example_double_shift:
     enabled: true
-    name: "&8Perla de Paso Sombra"
+    name: "&6Ejemplo Doble Shift"
     description:
-      - "&7Perla encantada que te teletransporta"
-      - "&7hacia donde estás mirando"
-      - "&cSolo funciona a corta distancia"
+      - "&7Se activa con doble shift"
+      - "&7rápido (dentro de 500ms)"
+      - "&eDemuestra: VELOCITY, MESSAGE"
     item:
-      material: "ENDER_PEARL"
-    uses: 5
-    cooldown: 15
-    triggers:
-      - type: "RIGHT_CLICK_ITEM"
-        consume_use: true
-    conditions:
-      - type: "MAX_DISTANCE"
-        value: 15
-      - type: "SAFE_LOCATION"
-        value: true
-    actions:
-      - type: "TELEPORT"
-        target: "LOOKING_AT"
-        max_distance: 15
-        safe: true
-      - type: "SOUND"
-        sound: "ENTITY_ENDERMAN_TELEPORT"
-        volume: 1.0
-        pitch: 1.0
-      - type: "PARTICLE"
-        particle: "PORTAL"
-        amount: 30
-        offset_x: 1.0
-        offset_y: 1.0
-        offset_z: 1.0
-
-  # Ejemplo 3: Cristal de Curación
-  healing_crystal:
-    enabled: true
-    name: "&dCristal de Curación"
-    description:
-      - "&7Cristal sagrado que cura heridas"
-      - "&7tanto tuyas como de aliados cercanos"
-      - "&9Raro y poderoso"
-    item:
-      material: "DIAMOND"
-    uses: 1  # Objeto de un solo uso
+      material: "FEATHER"
+    uses: 8
     cooldown: 5
     triggers:
-      - type: "RIGHT_CLICK_ITEM"
+      - type: "DOUBLE_SHIFT"
+        within: 500  # Tiempo máximo entre shifts (milisegundos)
         consume_use: true
     actions:
-      - type: "HEAL"
-        amount: 4.0
-        target: "SELF"
-      - type: "HEAL_RADIUS"
-        amount: 2.0
-        radius: 5.0
-        target: "NEARBY_PLAYERS"
-      - type: "POTION_EFFECT_RADIUS"
-        effect: "REGENERATION"
-        amplifier: 1
-        duration: 100
-        radius: 5.0
-        target: "NEARBY_PLAYERS"
-      - type: "PARTICLE_RADIUS"
-        particle: "HEART"
-        amount: 15
-        radius: 5.0
-        offset_y: 1.0
-      - type: "SOUND_RADIUS"
-        sound: "ENTITY_EXPERIENCE_ORB_PICKUP"
-        volume: 1.0
-        pitch: 1.2
-        radius: 5.0
-      - type: "MESSAGE_RADIUS"
-        message: "&d¡Has sido curado por un aura de curación!"
-        radius: 5.0
-
-  # Ejemplo 4: Runa de Velocidad
-  speed_rune:
-    enabled: true
-    name: "&eRuna de Rayo Veloz"
-    description:
-      - "&7Runa antigua que otorga"
-      - "&7velocidad sobrenatural"
-    item:
-      material: "BLAZE_POWDER"
-    uses: 10
-    cooldown: 3
-    triggers:
-      - type: "RIGHT_CLICK_ITEM"
-        consume_use: true
-    actions:
-      - type: "VELOCITY"
-        direction: "FORWARD"
-        strength: 2.0
-        y_velocity: 0.3
-      - type: "POTION_EFFECT"
-        effect: "SPEED"
-        amplifier: 2
-        duration: 40
-      - type: "PARTICLE_TRAIL"
-        particle: "FIREWORKS_SPARK"
-        amount: 5
-        duration: 20
-      - type: "SOUND"
-        sound: "ENTITY_LIGHTNING_BOLT_THUNDER"
-        volume: 0.5
-        pitch: 2.0
-
-  # Ejemplo 5: Amuleto de Furia
-  berserker_amulet:
-    enabled: true
-    name: "&4Amuleto de Furia"
-    description:
-      - "&7Amuleto maldito que despierta"
-      - "&7la ira interior del portador"
-      - "&c¡Usar con precaución!"
-    item:
-      material: "REDSTONE"
-    uses: 2
-    cooldown: 30
-    triggers:
-      - type: "RIGHT_CLICK_ITEM"
-        consume_use: true
-    conditions:
-      - type: "HEALTH_BELOW"
-        value: 10.0
-    actions:
-      - type: "POTION_EFFECT"
-        effect: "INCREASE_DAMAGE"
-        amplifier: 2
-        duration: 200
-      - type: "POTION_EFFECT"
-        effect: "DAMAGE_RESISTANCE"
-        amplifier: 1
-        duration: 200
-      - type: "POTION_EFFECT"
-        effect: "SPEED"
-        amplifier: 1
-        duration: 200
-      - type: "PARTICLE_AURA"
-        particle: "REDSTONE"
-        amount: 3
-        duration: 200
-        radius: 1.0
-        color_red: 255
-        color_green: 0
-        color_blue: 0
-      - type: "SOUND"
-        sound: "ENTITY_GHAST_SCREAM"
-        volume: 1.0
-        pitch: 0.8
+      - type: "VELOCITY"  # Acción: Aplicar impulso
+        direction: "FORWARD"  # Dirección: FORWARD, BACKWARD, UP, RANDOM
+        strength: 2.0  # Fuerza del impulso
+        y_velocity: 0.3  # Velocidad vertical adicional
       - type: "MESSAGE"
-        message: "&4¡Tu furia ha despertado!"
+        message: "&6¡Impulso hacia adelante activado!"
 
-  # Ejemplo 6: Gafas Encantadas
-  magic_goggles:
+  # ===================================================================
+  #                     TRIGGER: COMBO_GIVE
+  # ===================================================================
+  # Se activa al dar un número específico de hits consecutivos
+  
+  example_combo_attack:
     enabled: true
-    name: "&bGafas de Visión Nocturna"
+    name: "&4Ejemplo Combo Ataque"
     description:
-      - "&7Gafas encantadas que mejoran"
-      - "&7tu visión en la oscuridad"
-    item:
-      material: "GLASS"
-    uses: 20
-    cooldown: 1
-    triggers:
-      - type: "RIGHT_CLICK_ITEM"
-        consume_use: true
-    actions:
-      - type: "POTION_EFFECT"
-        effect: "NIGHT_VISION"
-        amplifier: 1
-        duration: 600
-      - type: "SOUND"
-        sound: "BLOCK_LEVER_CLICK"
-        volume: 0.5
-        pitch: 1.0
-      - type: "MESSAGE"
-        message: "&b¡Visión nocturna activada!"
-
-  # Ejemplo 7: Objeto de Combo - Rabia del Guerrero
-  warrior_rage:
-    enabled: true
-    name: "&4Rabia del Guerrero"
-    description:
-      - "&7Amuleto que se activa cuando"
-      - "&7das 5 golpes consecutivos"
-      - "&c¡Desata tu furia interior!"
+      - "&7Se activa al dar 4 hits"
+      - "&7consecutivos a enemigos"
+      - "&eDemuestra: COMBO_GIVE, múltiples POTION_EFFECT"
     item:
       material: "NETHER_STAR"
     uses: 3
     cooldown: 20
     triggers:
-      - type: "COMBO_GIVE"
-        required_hits: 5
-        reset_time: 3000
+      - type: "COMBO_GIVE"  # Se activa al dar hits
+        required_hits: 4  # Hits necesarios para activar
+        reset_time: 3000  # Tiempo antes de resetear combo (ms)
         consume_use: true
     actions:
       - type: "POTION_EFFECT"
-        effect: "INCREASE_DAMAGE"
+        effect: "INCREASE_DAMAGE"  # Strength en 1.8.8
         amplifier: 2
         duration: 200
       - type: "POTION_EFFECT"
         effect: "SPEED"
         amplifier: 1
         duration: 200
-      - type: "POTION_EFFECT"
-        effect: "DAMAGE_RESISTANCE"
-        amplifier: 1
-        duration: 100
-      - type: "SOUND"
-        sound: "ENTITY_ENDER_DRAGON_GROWL"
-        volume: 1.0
-        pitch: 0.8
-      - type: "PARTICLE"
-        particle: "REDSTONE"
-        amount: 20
-        offset_x: 1.0
-        offset_y: 1.0
-        offset_z: 1.0
       - type: "MESSAGE"
-        message: "&4¡RABIA DEL GUERRERO ACTIVADA!"
+        message: "&4¡COMBO DE ATAQUE ACTIVADO!"
 
-  # Ejemplo 8: Objeto de Combo Defensivo - Escudo Vengativo
-  vengeful_shield:
+  # ===================================================================
+  #                     TRIGGER: COMBO_RECEIVE
+  # ===================================================================
+  # Se activa al recibir un número específico de hits consecutivos
+  
+  example_combo_defense:
     enabled: true
-    name: "&9Escudo Vengativo"
+    name: "&9Ejemplo Combo Defensa"
     description:
-      - "&7Escudo mágico que se activa"
-      - "&7cuando recibes 4 golpes"
-      - "&9¡La venganza será tuya!"
+      - "&7Se activa al recibir 3 hits"
+      - "&7consecutivos de enemigos"
+      - "&eDemuestra: COMBO_RECEIVE, HEAL, condición HEALTH_BELOW"
     item:
       material: "SHIELD"
     uses: 2
     cooldown: 30
     triggers:
-      - type: "COMBO_RECEIVE"
-        required_hits: 4
-        reset_time: 5000
+      - type: "COMBO_RECEIVE"  # Se activa al recibir hits
+        required_hits: 3  # Hits necesarios para activar
+        reset_time: 4000  # Tiempo antes de resetear combo (ms)
         consume_use: true
     conditions:
-      - type: "HEALTH_BELOW"
-        value: 15.0
+      - type: "HEALTH_BELOW"  # Solo funciona si vida está baja
+        value: 10.0  # Vida menor a 10 corazones
     actions:
-      - type: "HEAL"
-        amount: 6.0
-        target: "SELF"
+      - type: "HEAL"  # Acción: Curar jugador
+        amount: 6.0  # Cantidad de vida a curar
+        target: "SELF"  # Objetivo: SELF
       - type: "POTION_EFFECT"
         effect: "DAMAGE_RESISTANCE"
-        amplifier: 2
-        duration: 100
-      - type: "POTION_EFFECT"
-        effect: "REGENERATION"
         amplifier: 1
-        duration: 60
-      - type: "VELOCITY"
-        direction: "UP"
-        strength: 1.0
-        y_velocity: 0.8
-      - type: "SOUND"
-        sound: "ENTITY_IRON_GOLEM_HURT"
-        volume: 1.0
-        pitch: 0.5
+        duration: 100
+      - type: "MESSAGE"
+        message: "&9¡DEFENSA AUTOMÁTICA ACTIVADA!"
+
+  # ===================================================================
+  #                     TRIGGER: ON_HIT
+  # ===================================================================
+  # Se activa cada vez que pegas a alguien
+  
+  example_on_hit:
+    enabled: true
+    name: "&cEjemplo Al Golpear"
+    description:
+      - "&7Se activa cada vez que"
+      - "&7golpeas a un enemigo"
+      - "&eDemuestra: ON_HIT trigger (sin combo)"
+    item:
+      material: "BLAZE_POWDER"
+    uses: 10
+    cooldown: 2
+    triggers:
+      - type: "ON_HIT"  # Se activa al pegar
+        consume_use: true
+    actions:
       - type: "PARTICLE"
-        particle: "CLOUD"
-        amount: 30
+        particle: "FLAME"
+        amount: 5
+        offset_x: 0.5
+        offset_y: 0.5
+        offset_z: 0.5
+      - type: "SOUND"
+        sound: "FIRE_IGNITE"
+        volume: 0.8
+        pitch: 1.2
+
+  # ===================================================================
+  #                     TRIGGER: ON_RECEIVE_HIT
+  # ===================================================================
+  # Se activa cada vez que recibes daño
+  
+  example_on_receive:
+    enabled: true
+    name: "&5Ejemplo Al Recibir Daño"
+    description:
+      - "&7Se activa cada vez que"
+      - "&7recibes daño de enemigos"
+      - "&eDemuestra: ON_RECEIVE_HIT trigger"
+    item:
+      material: "OBSIDIAN"
+    uses: 6
+    cooldown: 3
+    triggers:
+      - type: "ON_RECEIVE_HIT"  # Se activa al recibir daño
+        consume_use: true
+    actions:
+      - type: "PARTICLE"
+        particle: "SMOKE"
+        amount: 10
+        offset_x: 1.0
+        offset_y: 1.0
+        offset_z: 1.0
+      - type: "MESSAGE"
+        message: "&5¡Escudo reactivo activado!"
+
+  # ===================================================================
+  #                     ACCIÓN: TELEPORT
+  # ===================================================================
+  # Demuestra la acción de teletransporte
+  
+  example_teleport:
+    enabled: true
+    name: "&bEjemplo Teletransporte"
+    description:
+      - "&7Teletransporta hacia donde miras"
+      - "&7con verificación de seguridad"
+      - "&eDemuestra: TELEPORT, SAFE_LOCATION"
+    item:
+      material: "ENDER_PEARL"
+    uses: 4
+    cooldown: 15
+    triggers:
+      - type: "RIGHT_CLICK_ITEM"
+        consume_use: true
+    conditions:
+      - type: "SAFE_LOCATION"  # Solo teletransporta a lugares seguros
+        value: true
+    actions:
+      - type: "TELEPORT"  # Acción: Teletransportar
+        target: "LOOKING_AT"  # Hacia donde está mirando
+        max_distance: 15  # Distancia máxima
+        safe: true  # Verificar que el lugar sea seguro
+      - type: "SOUND"
+        sound: "ENDERMAN_TELEPORT"
+        volume: 1.0
+        pitch: 1.0
+      - type: "PARTICLE"
+        particle: "PORTAL"
+        amount: 25
+        offset_x: 1.0
+        offset_y: 1.0
+        offset_z: 1.0
+
+  # ===================================================================
+  #                     ACCIÓN: HEAL_RADIUS
+  # ===================================================================
+  # Demuestra curación en área
+  
+  example_heal_radius:
+    enabled: true
+    name: "&dEjemplo Curación Área"
+    description:
+      - "&7Cura a todos los jugadores"
+      - "&7en un radio de 5 bloques"
+      - "&eDemuestra: HEAL_RADIUS"
+    item:
+      material: "DIAMOND"
+    uses: 2
+    cooldown: 45
+    triggers:
+      - type: "RIGHT_CLICK_ITEM"
+        consume_use: true
+    actions:
+      - type: "HEAL"  # Curar al usuario
+        amount: 4.0
+        target: "SELF"
+      - type: "HEAL_RADIUS"  # Acción: Curar en área
+        amount: 3.0  # Cantidad de curación
+        radius: 5.0  # Radio de efecto
+        target: "NEARBY_PLAYERS"  # Solo jugadores cercanos
+      - type: "PARTICLE"
+        particle: "HEART"
+        amount: 20
         offset_x: 2.0
         offset_y: 1.0
         offset_z: 2.0
       - type: "MESSAGE"
-        message: "&9¡ESCUDO VENGATIVO ACTIVADO!"
+        message: "&d¡Aura de curación activada!"
+
+  # ===================================================================
+  #                     MÚLTIPLES TRIGGERS
+  # ===================================================================
+  # Objeto con múltiples formas de activación
+  
+  example_multiple_triggers:
+    enabled: true
+    name: "&eEjemplo Múltiples Triggers"
+    description:
+      - "&7Se puede activar con:"
+      - "&7- Click derecho"
+      - "&7- Doble shift"
+      - "&eDemuestra: múltiples triggers en un objeto"
+    item:
+      material: "GOLD_INGOT"
+    uses: 6
+    cooldown: 8
+    triggers:
+      - type: "RIGHT_CLICK_ITEM"  # Trigger 1: Click derecho
+        consume_use: true
+      - type: "DOUBLE_SHIFT"  # Trigger 2: Doble shift
+        within: 400
+        consume_use: true
+    actions:
+      - type: "POTION_EFFECT"
+        effect: "NIGHT_VISION"
+        amplifier: 1
+        duration: 300
+      - type: "MESSAGE"
+        message: "&e¡Objeto multi-trigger activado!"
+
+# ===================================================================
+#                     CONFIGURACIÓN DE TIPOS
+# ===================================================================
 
 # Configuración de acciones disponibles
 action-types:
-  # Efectos de poción
   POTION_EFFECT:
     description: "Aplica un efecto de poción"
     parameters: ["effect", "amplifier", "duration"]
     
-  # Curación
   HEAL:
     description: "Cura al objetivo"
     parameters: ["amount", "target"]
     
-  # Sonido
+  HEAL_RADIUS:
+    description: "Cura jugadores en área"
+    parameters: ["amount", "radius", "target"]
+    
   SOUND:
     description: "Reproduce un sonido"
     parameters: ["sound", "volume", "pitch"]
     
-  # Partículas
   PARTICLE:
     description: "Genera partículas"
     parameters: ["particle", "amount", "offset_x", "offset_y", "offset_z"]
     
-  # Teletransporte
   TELEPORT:
     description: "Teletransporta al jugador"
     parameters: ["target", "max_distance", "safe"]
     
-  # Velocidad/Impulso
   VELOCITY:
     description: "Aplica velocidad al jugador"
     parameters: ["direction", "strength", "y_velocity"]
     
-  # Mensaje
   MESSAGE:
     description: "Envía un mensaje al jugador"
     parameters: ["message"]
 
 # Configuración de triggers disponibles
 trigger-types:
-  RIGHT_CLICK:
-    description: "Click derecho con ítem"
-    parameters: ["item", "hand"]
+  RIGHT_CLICK_ITEM:
+    description: "Click derecho con objeto"
+    parameters: ["consume_use"]
     
   LEFT_CLICK:
-    description: "Click izquierdo con ítem"
+    description: "Click izquierdo general"
     parameters: ["item", "hand"]
     
   SHIFT_CLICK:
-    description: "Shift + Click con ítem"
+    description: "Shift + Click"
     parameters: ["item", "hand"]
     
   DOUBLE_SHIFT:
     description: "Doble shift rápido"
     parameters: ["within"]
     
-  ON_DAMAGE:
+  COMBO_GIVE:
+    description: "Al dar X hits consecutivos"
+    parameters: ["required_hits", "reset_time"]
+    
+  COMBO_RECEIVE:
+    description: "Al recibir X hits consecutivos"
+    parameters: ["required_hits", "reset_time"]
+    
+  ON_HIT:
+    description: "Al pegar a alguien"
+    parameters: ["target_type"]
+    
+  ON_RECEIVE_HIT:
     description: "Al recibir daño"
     parameters: ["min_damage"]
+
+# Configuración de condiciones disponibles
+condition-types:
+  HEALTH_BELOW:
+    description: "Solo si vida está por debajo de X"
+    parameters: ["value"]
     
-  ON_KILL:
-    description: "Al matar un mob/jugador"
-    parameters: ["entity_type"]
+  SAFE_LOCATION:
+    description: "Solo en ubicación segura"
+    parameters: ["value"]
+
+# ===================================================================
+#                     EFECTOS DE POCIÓN DISPONIBLES (1.8.8)
+# ===================================================================
+# SPEED - Velocidad
+# SLOW - Lentitud  
+# FAST_DIGGING - Prisa
+# SLOW_DIGGING - Fatiga minera
+# INCREASE_DAMAGE - Fuerza (Strength)
+# HEAL - Curación instantánea
+# HARM - Daño instantáneo
+# JUMP - Salto
+# CONFUSION - Náusea
+# REGENERATION - Regeneración
+# DAMAGE_RESISTANCE - Resistencia
+# FIRE_RESISTANCE - Resistencia al fuego
+# WATER_BREATHING - Respiración acuática
+# INVISIBILITY - Invisibilidad
+# BLINDNESS - Ceguera
+# NIGHT_VISION - Visión nocturna
+# HUNGER - Hambre
+# WEAKNESS - Debilidad
+# POISON - Veneno
+# WITHER - Wither
+# HEALTH_BOOST - Boost de vida
+# ABSORPTION - Absorción
+# SATURATION - Saturación
