@@ -305,6 +305,9 @@ public class AbilityManager {
                         // Ejecutar habilidad usando cache de acciones
                         executeAbility(ability, player);
                         
+                        // Registrar uso para sequential triggers
+                        SequentialTrigger.registerAbilityUse(player.getUniqueId());
+                        
                         // Aplicar cooldown
                         if (ability.getCooldown() > 0) {
                             setCooldown(player, ability.getId(), ability.getCooldown());

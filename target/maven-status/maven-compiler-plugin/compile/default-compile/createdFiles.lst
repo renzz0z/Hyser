@@ -18,6 +18,7 @@ com/hyser/hysercore/abilities/Ability.class
 com/hyser/hysercore/abilities/triggers/CombatTrigger.class
 com/hyser/hysercore/enchantments/listeners/EnchantmentBookListener.class
 com/hyser/hysercore/enchantments/types/VampireEnchantment.class
+com/hyser/hysercore/abilities/triggers/SequentialTrigger.class
 com/hyser/hysercore/managers/ChatGameManager.class
 com/hyser/hysercore/managers/ChatGameManager$4.class
 com/hyser/hysercore/abilities/conditions/SafeLocationCondition.class
@@ -31,6 +32,7 @@ com/hyser/hysercore/enchantments/listeners/AntiAutoArmorListener$ArmorChangeTrac
 com/hyser/hysercore/waypoints/LunarWaypoints$1.class
 com/hyser/hysercore/abilities/actions/PotionEffectAction.class
 com/hyser/hysercore/managers/ChatGameManager$1.class
+com/hyser/hysercore/abilities/actions/EnergyChargeAction.class
 com/hyser/hysercore/abilities/actions/HealRadiusAction.class
 com/hyser/hysercore/abilities/actions/HealAction.class
 com/hyser/hysercore/abilities/actions/ParticleAction.class
@@ -40,6 +42,7 @@ com/hyser/hysercore/enchantments/types/DashEnchantment.class
 com/hyser/hysercore/enchantments/listeners/SwordEnchantmentListener.class
 com/hyser/hysercore/teamviewer/LunarTeamViewer.class
 com/hyser/hysercore/games/NumberGame.class
+com/hyser/hysercore/abilities/actions/EnergyReleaseAction.class
 com/hyser/hysercore/games/WordGame.class
 com/hyser/hysercore/abilities/triggers/ComboTrigger.class
 com/hyser/hysercore/managers/ChatGameManager$5.class
@@ -48,6 +51,7 @@ com/hyser/hysercore/waypoints/WaypointsCommand.class
 com/hyser/hysercore/abilities/AbilityCommand.class
 com/hyser/hysercore/utils/PlayerStats.class
 com/hyser/hysercore/apples/Apples.class
+com/hyser/hysercore/abilities/actions/EnergyChargeAction$1.class
 com/hyser/hysercore/enchantments/types/ExplosiveEnchantment.class
 com/hyser/hysercore/teamviewer/LunarTeamViewer$1.class
 com/hyser/hysercore/abilities/actions/SoundAction.class

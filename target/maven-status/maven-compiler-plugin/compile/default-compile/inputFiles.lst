@@ -11,6 +11,7 @@
 /home/runner/workspace/src/main/java/com/hyser/hysercore/abilities/AbilityCommand.java
 /home/runner/workspace/src/main/java/com/hyser/hysercore/apples/Apples.java
 /home/runner/workspace/src/main/java/com/hyser/hysercore/enchantments/managers/SwordEnchantmentManager.java
+/home/runner/workspace/src/main/java/com/hyser/hysercore/abilities/actions/EnergyReleaseAction.java
 /home/runner/workspace/src/main/java/com/hyser/hysercore/abilities/triggers/ItemUseTrigger.java
 /home/runner/workspace/src/main/java/com/hyser/hysercore/abilities/AbilityAction.java
 /home/runner/workspace/src/main/java/com/hyser/hysercore/abilities/conditions/SafeLocationCondition.java
@@ -20,6 +21,7 @@
 /home/runner/workspace/src/main/java/com/hyser/hysercore/enchantments/listeners/SwordEnchantmentListener.java
 /home/runner/workspace/src/main/java/com/hyser/hysercore/enchantments/types/LifestealEnchantment.java
 /home/runner/workspace/src/main/java/com/hyser/hysercore/enchantments/types/SwordEnchantment.java
+/home/runner/workspace/src/main/java/com/hyser/hysercore/abilities/triggers/SequentialTrigger.java
 /home/runner/workspace/src/main/java/com/hyser/hysercore/enchantments/types/DashEnchantment.java
 /home/runner/workspace/src/main/java/com/hyser/hysercore/games/TriviaGame.java
 /home/runner/workspace/src/main/java/com/hyser/hysercore/enchantments/types/VampireEnchantment.java
@@ -37,6 +39,7 @@
 /home/runner/workspace/src/main/java/com/hyser/hysercore/games/MathGame.java
 /home/runner/workspace/src/main/java/com/hyser/hysercore/enchantments/listeners/EnchantmentBookListener.java
 /home/runner/workspace/src/main/java/com/hyser/hysercore/enchantments/types/SharpnessEnchantment.java
+/home/runner/workspace/src/main/java/com/hyser/hysercore/abilities/actions/EnergyChargeAction.java
 /home/runner/workspace/src/main/java/com/hyser/hysercore/teamviewer/TeamViewerCommand.java
 /home/runner/workspace/src/main/java/com/hyser/hysercore/abilities/AbilityManager.java
 /home/runner/workspace/src/main/java/com/hyser/hysercore/abilities/Ability.java

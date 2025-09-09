@@ -27,6 +27,7 @@ ability-system:
 # - COMBO_RECEIVE: Al recibir X hits consecutivos
 # - ON_HIT: Al pegar a alguien
 # - ON_RECEIVE_HIT: Al recibir daño
+# - ABILITY_THEN_DOUBLE_SHIFT: Usar ability y luego doble shift (NUEVO)
 #
 # ACCIONES DISPONIBLES:
 # - POTION_EFFECT: Aplicar efecto de poción
@@ -37,6 +38,8 @@ ability-system:
 # - SOUND: Reproducir sonido
 # - PARTICLE: Mostrar partículas
 # - MESSAGE: Enviar mensaje
+# - ENERGY_CHARGE: Cargar energía a lo largo del tiempo (NUEVO)
+# - ENERGY_RELEASE: Liberar energía empujando enemigos (NUEVO)
 #
 # CONDICIONES DISPONIBLES:
 # - HEALTH_BELOW: Solo si vida está por debajo de X
@@ -360,6 +363,115 @@ ability-items:
         message: "&e¡Objeto multi-trigger activado!"
 
 
+  # ===================================================================
+  #                     SISTEMA DE ENERGÍA
+  # ===================================================================
+  # Objeto que carga energía y luego la libera con doble shift
+  
+  energy_charger:
+    enabled: true
+    name: "&c⚡ Cargador de Energía ⚡"
+    description:
+      - "&7Click derecho para comenzar a cargar energía"
+      - "&7Mantén el objeto en mano mientras carga"
+      - "&eDemuestra: ENERGY_CHARGE (nuevo sistema)"
+    item:
+      material: "REDSTONE"
+    uses: 3
+    cooldown: 5
+    triggers:
+      - type: "RIGHT_CLICK_ITEM"
+        consume_use: true
+    actions:
+      - type: "ENERGY_CHARGE"  # Acción: Cargar energía
+        max_energy: 100  # Energía máxima
+        charge_interval_ticks: 10  # Intervalo de carga (0.5 segundos)
+        energy_per_interval: 5  # Energía por intervalo
+        show_progress: true  # Mostrar progreso
+        charge_message: "&e⚡ Energía: &f{energy}/{max_energy} &e⚡"
+      - type: "MESSAGE"
+        message: "&e⚡ ¡Iniciando carga de energía! Mantén el objeto en mano..."
+
+
+  energy_releaser:
+    enabled: true
+    name: "&4⚡ Liberador de Energía ⚡"
+    description:
+      - "&7Primero usa el cargador de energía"
+      - "&7Luego haz doble shift para liberar"
+      - "&cEmpuja enemigos en 5 bloques de radio"
+      - "&eDemuestra: ABILITY_THEN_DOUBLE_SHIFT + ENERGY_RELEASE"
+    item:
+      material: "TNT"
+    uses: 2
+    cooldown: 15
+    triggers:
+      - type: "ABILITY_THEN_DOUBLE_SHIFT"  # Trigger secuencial
+        sequence_timeout: 10000  # 10 segundos para completar secuencia
+        consume_use: true
+    actions:
+      - type: "ENERGY_RELEASE"  # Acción: Liberar energía
+        radius: 5.0  # Radio de efecto
+        knockback_force: 2.5  # Fuerza de empuje
+        damage: 2.0  # Daño opcional
+        required_energy: 100  # Energía necesaria
+        affect_players: true  # Afectar jugadores
+        affect_mobs: true  # Afectar mobs
+        create_effects: true  # Crear efectos visuales
+        release_message: "&c⚡ ¡EXPLOSIÓN DE ENERGÍA! ⚡"
+      - type: "SOUND"
+        sound: "EXPLODE"
+        volume: 2.0
+        pitch: 0.8
+
+
+  # ===================================================================
+  #                     SISTEMA COMBINADO DE ENERGÍA
+  # ===================================================================
+  # Objeto que combina carga y liberación en uno solo
+  
+  energy_orb:
+    enabled: true
+    name: "&6⚡ Orbe de Energía Supremo ⚡"
+    description:
+      - "&7Click derecho: Cargar energía"
+      - "&7Doble shift: Liberar energía cargada"
+      - "&6Combina ambas funciones en un objeto"
+      - "&eDemuestra: Sistema completo de energía"
+    item:
+      material: "NETHER_STAR"
+    uses: 5
+    cooldown: 20
+    triggers:
+      - type: "RIGHT_CLICK_ITEM"  # Cargar energía
+        consume_use: false  # No consumir uso al cargar
+      - type: "ABILITY_THEN_DOUBLE_SHIFT"  # Liberar energía
+        sequence_timeout: 15000  # 15 segundos
+        consume_use: true  # Consumir uso al liberar
+    actions:
+      - type: "ENERGY_CHARGE"
+        max_energy: 150
+        charge_interval_ticks: 8  # Más rápido
+        energy_per_interval: 8
+        show_progress: true
+        charge_message: "&6⚡ Orbe: &f{energy}/{max_energy} &6⚡"
+      - type: "ENERGY_RELEASE"
+        radius: 6.0  # Radio mayor
+        knockback_force: 3.0  # Fuerza mayor
+        damage: 3.0  # Más daño
+        required_energy: 150
+        affect_players: true
+        affect_mobs: true
+        create_effects: true
+        release_message: "&6⚡ ¡PODER SUPREMO LIBERADO! ⚡"
+      - type: "PARTICLE"
+        particle: "FIREWORKS_SPARK"
+        amount: 50
+        offset_x: 3.0
+        offset_y: 2.0
+        offset_z: 3.0
+
+
 
 # ===================================================================
 #                     CONFIGURACIÓN DE TIPOS
@@ -399,6 +511,14 @@ action-types:
   MESSAGE:
     description: "Envía un mensaje al jugador"
     parameters: ["message"]
+    
+  ENERGY_CHARGE:
+    description: "Carga energía a lo largo del tiempo"
+    parameters: ["max_energy", "charge_interval_ticks", "energy_per_interval", "show_progress", "charge_message"]
+    
+  ENERGY_RELEASE:
+    description: "Libera energía empujando enemigos en área"
+    parameters: ["radius", "knockback_force", "damage", "required_energy", "affect_players", "affect_mobs", "create_effects", "release_message"]
 
 
 # Configuración de triggers disponibles
@@ -434,6 +554,10 @@ trigger-types:
   ON_RECEIVE_HIT:
     description: "Al recibir daño"
     parameters: ["min_damage"]
+    
+  ABILITY_THEN_DOUBLE_SHIFT:
+    description: "Usar ability y luego hacer doble shift en secuencia"
+    parameters: ["sequence_timeout"]
 
 
 # Configuración de condiciones disponibles
