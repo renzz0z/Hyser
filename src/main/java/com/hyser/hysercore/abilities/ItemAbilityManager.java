@@ -77,7 +77,18 @@ public class ItemAbilityManager {
             return false;
         }
         
-        ItemMeta meta = item.getItemMeta();
+        // CORREGIDO: Trabajar directamente con el item en la mano del jugador
+        ItemStack itemInHand = player.getItemInHand();
+        if (itemInHand == null || !itemInHand.hasItemMeta()) {
+            return false;
+        }
+        
+        // Verificar que sea el mismo item
+        if (!itemInHand.isSimilar(item) && !itemInHand.equals(item)) {
+            return false;
+        }
+        
+        ItemMeta meta = itemInHand.getItemMeta();
         List<String> lore = meta.getLore();
         
         if (lore == null) return false;
@@ -116,15 +127,18 @@ public class ItemAbilityManager {
         currentUses--;
         
         if (currentUses <= 0) {
-            // Eliminar item si no quedan usos
-            player.getInventory().remove(item);
+            // CORREGIDO: Remover específicamente el item de la mano
+            player.setItemInHand(null);
             player.sendMessage(ChatColor.GRAY + "El objeto se ha gastado completamente.");
         } else {
-            // Actualizar lore con nuevos usos
+            // CORREGIDO: Actualizar el item directamente en la mano del jugador
             lore.set(usesLineIndex, ChatColor.GRAY + "Usos restantes: " + 
                 ChatColor.WHITE + currentUses + "/" + maxUses);
             meta.setLore(lore);
-            item.setItemMeta(meta);
+            itemInHand.setItemMeta(meta);
+            
+            // Actualizar visualmente el inventario
+            player.updateInventory();
         }
         
         return true;

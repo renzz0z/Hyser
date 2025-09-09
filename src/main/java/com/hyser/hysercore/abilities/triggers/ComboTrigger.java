@@ -38,6 +38,11 @@ public class ComboTrigger extends AbilityTrigger {
         UUID playerId = player.getUniqueId();
         long currentTime = System.currentTimeMillis();
         
+        // NUEVO: Solo procesar si el jugador tiene un objeto de ability en mano
+        if (!hasAbilityItemInHand(player)) {
+            return false;
+        }
+        
         // Verificar si el combo se resetea por tiempo
         if (shouldResetCombo(playerId, currentTime)) {
             resetCombo(playerId);
@@ -54,7 +59,10 @@ public class ComboTrigger extends AbilityTrigger {
                     lastHitTime.put(playerId, currentTime);
                     
                     if (currentHits >= requiredHits) {
-                        triggerActivated = true;
+                        // NUEVO: Solo activar si aún tiene el objeto en mano
+                        if (hasAbilityItemInHand(player)) {
+                            triggerActivated = true;
+                        }
                         resetCombo(playerId); // Resetear después de activar
                     }
                 }
@@ -68,7 +76,10 @@ public class ComboTrigger extends AbilityTrigger {
                     lastHitTime.put(playerId, currentTime);
                     
                     if (currentHits >= requiredHits) {
-                        triggerActivated = true;
+                        // NUEVO: Solo activar si aún tiene el objeto en mano
+                        if (hasAbilityItemInHand(player)) {
+                            triggerActivated = true;
+                        }
                         resetCombo(playerId); // Resetear después de activar
                     }
                 }
@@ -76,6 +87,27 @@ public class ComboTrigger extends AbilityTrigger {
         }
         
         return triggerActivated;
+    }
+    
+    private boolean hasAbilityItemInHand(Player player) {
+        org.bukkit.inventory.ItemStack itemInHand = player.getItemInHand();
+        if (itemInHand == null || !itemInHand.hasItemMeta()) {
+            return false;
+        }
+        
+        org.bukkit.inventory.meta.ItemMeta meta = itemInHand.getItemMeta();
+        java.util.List<String> lore = meta.getLore();
+        
+        // Verificar si tiene el lore de ability
+        if (lore != null) {
+            for (String line : lore) {
+                if (line.contains("Usos restantes:")) {
+                    return true;
+                }
+            }
+        }
+        
+        return false;
     }
     
     private boolean shouldResetCombo(UUID playerId, long currentTime) {

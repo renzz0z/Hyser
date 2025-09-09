@@ -8,6 +8,8 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.inventory.meta.ItemMeta;
+import java.util.List;
 
 public class ClickTrigger extends AbilityTrigger {
     private Action requiredAction;
@@ -63,7 +65,11 @@ public class ClickTrigger extends AbilityTrigger {
             }
         }
         
-        // En 1.8.8 no hay getHand(), omitir verificacion de mano
+        // CORREGIDO: Verificar que el objeto de ability esté en mano
+        ItemStack itemInHand = player.getItemInHand();
+        if (!isAbilityItemInHand(itemInHand)) {
+            return false;
+        }
         
         if (requiredItem != null) {
             ItemStack item = interactEvent.getItem();
@@ -73,5 +79,25 @@ public class ClickTrigger extends AbilityTrigger {
         }
         
         return true;
+    }
+    
+    private boolean isAbilityItemInHand(ItemStack item) {
+        if (item == null || !item.hasItemMeta()) {
+            return false;
+        }
+        
+        ItemMeta meta = item.getItemMeta();
+        List<String> lore = meta.getLore();
+        
+        // Verificar si tiene el lore de ability
+        if (lore != null) {
+            for (String line : lore) {
+                if (line.contains("Usos restantes:")) {
+                    return true;
+                }
+            }
+        }
+        
+        return false;
     }
 }
