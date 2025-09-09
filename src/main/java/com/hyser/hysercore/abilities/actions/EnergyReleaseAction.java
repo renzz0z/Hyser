@@ -43,14 +43,17 @@ public class EnergyReleaseAction extends AbilityAction {
         // Verificar que el jugador tiene suficiente energía
         int currentEnergy = EnergyChargeAction.getEnergyLevel(playerId);
         if (currentEnergy < requiredEnergy) {
-            player.sendMessage(ChatColor.RED + "⚡ Energía insuficiente: " + currentEnergy + "/" + requiredEnergy);
+            String message = getConfigMessage("energy.release.insufficient")
+                .replace("{current}", String.valueOf(currentEnergy))
+                .replace("{required}", String.valueOf(requiredEnergy));
+            player.sendMessage(message);
             return;
         }
         
         Location playerLoc = player.getLocation();
         
         // Mensaje de liberación
-        String message = ChatColor.translateAlternateColorCodes('&', releaseMessage);
+        String message = getConfigMessage("energy.release.explosion");
         player.sendMessage(message);
         
         // Efectos visuales y sonoros en el jugador
@@ -114,20 +117,35 @@ public class EnergyReleaseAction extends AbilityAction {
             // Efectos individuales en cada objetivo
             if (createEffects && target instanceof Player) {
                 Player targetPlayer = (Player) target;
-                targetPlayer.sendMessage(ChatColor.RED + "⚡ ¡Fuiste empujado por una explosión de energía!");
+                targetPlayer.sendMessage(getConfigMessage("energy.release.hit-by-energy"));
                 targetPlayer.playSound(targetPlayer.getLocation(), Sound.HURT_FLESH, 1.0f, 0.8f);
             }
         }
         
         // Mensaje de resultado
         if (affectedCount > 0) {
-            player.sendMessage(ChatColor.YELLOW + "⚡ Empujaste " + affectedCount + " enemigos");
+            String resultMessage = getConfigMessage("energy.release.enemies-pushed")
+                .replace("{count}", String.valueOf(affectedCount));
+            player.sendMessage(resultMessage);
         } else {
-            player.sendMessage(ChatColor.GRAY + "⚡ No hay enemigos en el área");
+            player.sendMessage(getConfigMessage("energy.release.no-enemies"));
         }
         
         // Consumir energía
         EnergyChargeAction.consumeEnergy(playerId);
-        player.sendMessage(ChatColor.GRAY + "⚡ Energía consumida completamente");
+        player.sendMessage(getConfigMessage("energy.release.energy-consumed"));
+    }
+    
+    private String getConfigMessage(String key) {
+        // Por ahora retorna un mensaje por defecto, se actualizará para leer de lang.yml
+        switch (key) {
+            case "energy.release.insufficient": return ChatColor.RED + "⚡ Energía insuficiente: {current}/{required}";
+            case "energy.release.explosion": return ChatColor.RED + "⚡ ¡EXPLOSIÓN DE ENERGÍA! ⚡";
+            case "energy.release.hit-by-energy": return ChatColor.RED + "⚡ ¡Fuiste empujado por una explosión de energía!";
+            case "energy.release.enemies-pushed": return ChatColor.YELLOW + "⚡ Empujaste {count} enemigos";
+            case "energy.release.no-enemies": return ChatColor.GRAY + "⚡ No hay enemigos en el área";
+            case "energy.release.energy-consumed": return ChatColor.GRAY + "⚡ Energía consumida completamente";
+            default: return ChatColor.GRAY + "Mensaje no encontrado";
+        }
     }
 }

@@ -28,10 +28,7 @@ public class SequentialTrigger extends AbilityTrigger {
         UUID playerId = player.getUniqueId();
         long currentTime = System.currentTimeMillis();
         
-        // Solo procesar si tiene objeto de ability en mano
-        if (!hasAbilityItemInHand(player)) {
-            return false;
-        }
+        // MODIFICADO: Ya no requiere objeto en mano para activar secuencia
         
         switch (sequenceType) {
             case "ability_then_double_shift":
@@ -59,9 +56,10 @@ public class SequentialTrigger extends AbilityTrigger {
         
         Long lastUseTime = lastAbilityTime.get(playerId);
         if (lastUseTime == null || (currentTime - lastUseTime) > sequenceTimeout) {
-            // Tiempo expirado, limpiar datos
+            // Tiempo expirado, limpiar datos y notificar
             abilityUsed.remove(playerId);
             lastAbilityTime.remove(playerId);
+            player.sendMessage(getConfigMessage("sequential.sequence-timeout"));
             return false;
         }
         
@@ -72,24 +70,12 @@ public class SequentialTrigger extends AbilityTrigger {
         return true;
     }
     
-    private boolean hasAbilityItemInHand(Player player) {
-        org.bukkit.inventory.ItemStack itemInHand = player.getItemInHand();
-        if (itemInHand == null || !itemInHand.hasItemMeta()) {
-            return false;
+    private String getConfigMessage(String key) {
+        // Por ahora retorna un mensaje por defecto, se actualizará para leer de lang.yml
+        switch (key) {
+            case "sequential.sequence-timeout": return org.bukkit.ChatColor.RED + "⚡ Secuencia expirada. Usa la habilidad de nuevo";
+            default: return org.bukkit.ChatColor.GRAY + "Mensaje no encontrado";
         }
-        
-        org.bukkit.inventory.meta.ItemMeta meta = itemInHand.getItemMeta();
-        java.util.List<String> lore = meta.getLore();
-        
-        if (lore != null) {
-            for (String line : lore) {
-                if (line.contains("Usos restantes:")) {
-                    return true;
-                }
-            }
-        }
-        
-        return false;
     }
     
     // Métodos estáticos para registrar uso de ability

@@ -1,0 +1,86 @@
+# ===================================================================
+#                    HYSERCORE - CONFIGURACIÓN DE IDIOMA
+# ===================================================================
+# Archivo de configuración para todos los mensajes del sistema
+# Usa & para códigos de color de Minecraft
+# ===================================================================
+
+# Mensajes generales del sistema
+general:
+  prefix: "&8[&dAbilities&8]&r "
+  cooldown-message: "&c¡Debes esperar {cooldown} segundos para usar esta habilidad!"
+  no-permission-message: "&c¡No tienes permisos para usar esta habilidad!"
+  no-uses-remaining: "&c¡Este objeto no tiene más usos!"
+  item-consumed: "&7El objeto se ha gastado completamente."
+
+# Sistema de energía
+energy:
+  charge:
+    start: "&e⚡ ¡Comenzando carga de energía! Mantén el objeto en mano..."
+    interrupted: "&c⚡ Carga interrumpida: necesitas mantener el objeto en mano"
+    max-reached: "&a⚡ ¡ENERGÍA MÁXIMA ALCANZADA! Usa doble shift para liberar"
+    progress: "&e⚡ Energía: &f{energy}/{max_energy} &e⚡"
+    orb-progress: "&6⚡ Orbe: &f{energy}/{max_energy} &6⚡"
+    
+  release:
+    insufficient: "&c⚡ Energía insuficiente: {current}/{required}"
+    explosion: "&c⚡ ¡EXPLOSIÓN DE ENERGÍA! ⚡"
+    supreme-power: "&6⚡ ¡PODER SUPREMO LIBERADO! ⚡"
+    enemies-pushed: "&e⚡ Empujaste {count} enemigos"
+    no-enemies: "&7⚡ No hay enemigos en el área"
+    energy-consumed: "&7⚡ Energía consumida completamente"
+    hit-by-energy: "&c⚡ ¡Fuiste empujado por una explosión de energía!"
+
+# Sistema de abilities secuenciales
+sequential:
+  ability-ready: "&a⚡ Habilidad cargada: Haz doble shift para activar"
+  sequence-timeout: "&c⚡ Secuencia expirada. Usa la habilidad de nuevo"
+  already-charging: "&c⚡ Ya tienes una habilidad activa. Úsala primero o espera a que expire"
+
+# Mensajes de abilities de ejemplo
+abilities:
+  example-right-click: "&a¡Ejemplo de click derecho activado!"
+  example-double-shift: "&6¡Impulso hacia adelante activado!"
+  example-combo-attack: "&4¡COMBO DE ATAQUE ACTIVADO!"
+  example-combo-defense: "&9¡DEFENSA AUTOMÁTICA ACTIVADA!"
+  example-reactive-shield: "&5¡Escudo reactivo activado!"
+  example-teleport-success: "&b¡Teletransporte exitoso!"
+  example-heal-aura: "&d¡Aura de curación activada!"
+  example-multi-trigger: "&e¡Objeto multi-trigger activado!"
+
+# Comandos y utilidades
+commands:
+  abilities:
+    list: "&aAbilities disponibles:"
+    info: "&eInformación de habilidad: &f{ability}"
+    reload-success: "&a¡Configuración de abilities recargada!"
+    reload-error: "&cError al recargar configuración de abilities"
+    not-found: "&cHabilidad '{ability}' no encontrada"
+    
+# Libros de encantamiento
+enchant-books:
+  need-sword: "&cNecesitas tener una espada para aplicar este libro de encantamiento."
+  invalid-book: "&cEste no es un libro de encantamiento válido."
+  already-has-enchant: "&cEsta espada ya tiene el encantamiento &f{enchant}&c."
+  success: "&a¡Encantamiento &f{enchant} &aaplicado exitosamente!"
+  failed: "&cEl encantamiento falló. ¡Inténtalo de nuevo!"
+  book-consumed: "&7El libro de encantamiento ha sido consumido."
+
+# ChatGames
+chatgames:
+  prefix: "&7[&6ChatGames&7] &r"
+  welcome: "&6¡Bienvenido al servidor!"
+  active: "&b¡Los ChatGames están activos! Participa y gana recompensas."
+  stats: "&eEstadísticas: &f{played} jugados, &a{won} ganados &7({rate}%)"
+  
+# Waypoints y TeamViewer
+waypoints:
+  created: "&a¡Waypoint '{name}' creado exitosamente!"
+  removed: "&c¡Waypoint '{name}' eliminado!"
+  not-found: "&cWaypoint '{name}' no encontrado."
+  list-header: "&eWaypoints del clan:"
+  
+teamviewer:
+  enabled: "&a¡TeamViewer activado!"
+  disabled: "&c¡TeamViewer desactivado!"
+  no-clan: "&cNo perteneces a ningún clan."

@@ -17,6 +17,7 @@ public class EnergyChargeAction extends AbilityAction {
     private static final Map<UUID, Integer> energyLevels = new ConcurrentHashMap<>();
     private static final Map<UUID, BukkitRunnable> chargeTasks = new ConcurrentHashMap<>();
     private static final Map<UUID, Long> chargeStartTime = new ConcurrentHashMap<>();
+    private static final Map<UUID, Boolean> allowedToCharge = new ConcurrentHashMap<>();
     
     private int maxEnergy;
     private long chargeIntervalTicks;
@@ -53,7 +54,16 @@ public class EnergyChargeAction extends AbilityAction {
         energyLevels.putIfAbsent(playerId, 0);
         chargeStartTime.put(playerId, System.currentTimeMillis());
         
-        player.sendMessage(ChatColor.YELLOW + "⚡ ¡Comenzando carga de energía! Mantén el objeto en mano...");
+        // Verificar si ya tiene una habilidad activa
+        if (hasActiveAbility(playerId)) {
+            player.sendMessage(getConfigMessage("sequential.already-charging"));
+            return;
+        }
+        
+        // Marcar como permitido para cargar
+        allowedToCharge.put(playerId, true);
+        
+        player.sendMessage(getConfigMessage("energy.charge.start"));
         
         // Crear nueva tarea de carga
         BukkitRunnable chargeTask = new BukkitRunnable() {
@@ -68,9 +78,12 @@ public class EnergyChargeAction extends AbilityAction {
                     return;
                 }
                 
-                // Verificar que el objeto sigue en mano
-                if (!hasAbilityItemInHand(player)) {
-                    player.sendMessage(ChatColor.RED + "⚡ Carga interrumpida: necesitas mantener el objeto en mano");
+                // MODIFICADO: Ya no requiere objeto en mano después de activar
+                // Solo verificar durante los primeros 3 segundos
+                long elapsedTime = System.currentTimeMillis() - chargeStartTime.get(playerId);
+                if (elapsedTime < 3000 && !hasAbilityItemInHand(player)) {
+                    player.sendMessage(getConfigMessage("energy.charge.interrupted"));
+                    allowedToCharge.remove(playerId);
                     chargeTasks.remove(playerId);
                     cancel();
                     return;
@@ -80,7 +93,8 @@ public class EnergyChargeAction extends AbilityAction {
                 
                 if (currentEnergy >= maxEnergy) {
                     // Energía máxima alcanzada
-                    player.sendMessage(ChatColor.GREEN + "⚡ ¡ENERGÍA MÁXIMA ALCANZADA! Usa doble shift para liberar");
+                    player.sendMessage(getConfigMessage("energy.charge.max-reached"));
+                    player.sendMessage(getConfigMessage("sequential.ability-ready"));
                     player.playSound(player.getLocation(), Sound.LEVEL_UP, 1.0f, 1.0f);
                     player.getWorld().playEffect(player.getLocation(), Effect.ENDER_SIGNAL, 0);
                     chargeTasks.remove(playerId);
@@ -94,9 +108,9 @@ public class EnergyChargeAction extends AbilityAction {
                 
                 // Mostrar progreso
                 if (showProgress && newEnergy % (energyPerInterval * 3) == 0) { // Cada 3 intervalos
-                    String message = ChatColor.translateAlternateColorCodes('&', 
-                        chargeMessage.replace("{energy}", String.valueOf(newEnergy))
-                                   .replace("{max_energy}", String.valueOf(maxEnergy)));
+                    String message = getConfigMessage("energy.charge.progress")
+                        .replace("{energy}", String.valueOf(newEnergy))
+                        .replace("{max_energy}", String.valueOf(maxEnergy));
                     player.sendMessage(message);
                     
                     // Efectos visuales y sonoros
@@ -142,6 +156,7 @@ public class EnergyChargeAction extends AbilityAction {
     public static void consumeEnergy(UUID playerId) {
         energyLevels.remove(playerId);
         chargeStartTime.remove(playerId);
+        allowedToCharge.remove(playerId);
         
         // Cancelar tarea de carga si existe
         BukkitRunnable task = chargeTasks.get(playerId);
@@ -167,6 +182,24 @@ public class EnergyChargeAction extends AbilityAction {
     public static void clearPlayerData(UUID playerId) {
         energyLevels.remove(playerId);
         chargeStartTime.remove(playerId);
+        allowedToCharge.remove(playerId);
         stopCharging(playerId);
+    }
+    
+    public static boolean hasActiveAbility(UUID playerId) {
+        return allowedToCharge.containsKey(playerId) || energyLevels.containsKey(playerId);
+    }
+    
+    private String getConfigMessage(String key) {
+        // Por ahora retorna un mensaje por defecto, se actualizará para leer de lang.yml
+        switch (key) {
+            case "energy.charge.start": return ChatColor.YELLOW + "⚡ ¡Comenzando carga de energía! Mantén el objeto en mano...";
+            case "energy.charge.interrupted": return ChatColor.RED + "⚡ Carga interrumpida: necesitas mantener el objeto en mano";
+            case "energy.charge.max-reached": return ChatColor.GREEN + "⚡ ¡ENERGÍA MÁXIMA ALCANZADA! Usa doble shift para liberar";
+            case "energy.charge.progress": return "&e⚡ Energía: &f{energy}/{max_energy} &e⚡";
+            case "sequential.ability-ready": return ChatColor.AQUA + "⚡ Habilidad cargada: Haz doble shift para activar";
+            case "sequential.already-charging": return ChatColor.RED + "⚡ Ya tienes una habilidad activa. Úsala primero o espera a que expire";
+            default: return ChatColor.GRAY + "Mensaje no encontrado";
+        }
     }
 }
