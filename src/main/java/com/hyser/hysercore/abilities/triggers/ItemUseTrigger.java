@@ -13,10 +13,33 @@ import java.util.List;
 
 public class ItemUseTrigger extends AbilityTrigger {
     private boolean consumeUse;
+    private Material requiredMaterial;
+    private int requiredData;
+    private String requiredName;
     
     public ItemUseTrigger(String type, ConfigurationSection config) {
         super(type, config);
         this.consumeUse = config.getBoolean("consume_use", true);
+        
+        // Obtener información del item requerido de la configuración padre
+        ConfigurationSection parentConfig = config.getParent();
+        if (parentConfig != null && parentConfig.contains("item")) {
+            ConfigurationSection itemSection = parentConfig.getConfigurationSection("item");
+            if (itemSection != null) {
+                String materialName = itemSection.getString("material", "STONE");
+                try {
+                    this.requiredMaterial = Material.valueOf(materialName);
+                } catch (IllegalArgumentException e) {
+                    this.requiredMaterial = Material.STONE;
+                }
+                this.requiredData = itemSection.getInt("data", 0);
+            }
+        }
+        
+        // Obtener nombre requerido
+        if (parentConfig != null) {
+            this.requiredName = parentConfig.getString("name", "");
+        }
     }
     
     @Override
@@ -47,10 +70,28 @@ public class ItemUseTrigger extends AbilityTrigger {
             return false;
         }
         
-        ItemMeta meta = item.getItemMeta();
-        List<String> lore = meta.getLore();
+        // CRÍTICO: Verificar material primero
+        if (requiredMaterial != null && item.getType() != requiredMaterial) {
+            return false;
+        }
         
-        // Verificar si tiene el lore de ability
+        // CRÍTICO: Verificar data si es necesario
+        if (requiredData > 0 && item.getDurability() != requiredData) {
+            return false;
+        }
+        
+        ItemMeta meta = item.getItemMeta();
+        
+        // CRÍTICO: Verificar nombre del item si se especifica
+        if (requiredName != null && !requiredName.isEmpty()) {
+            String displayName = meta.getDisplayName();
+            if (displayName == null || !displayName.equals(org.bukkit.ChatColor.translateAlternateColorCodes('&', requiredName))) {
+                return false;
+            }
+        }
+        
+        // Por último, verificar si tiene lore de ability
+        List<String> lore = meta.getLore();
         if (lore != null) {
             for (String line : lore) {
                 if (line.contains("Usos restantes:")) {
