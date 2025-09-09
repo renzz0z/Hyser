@@ -261,7 +261,7 @@ ability-items:
   # Demuestra la acción de teletransporte
   
   example_teleport:
-    enabled: true
+    enabled: false  # DESHABILITADO para evitar teletransporte no deseado
     name: "&bEjemplo Teletransporte"
     description:
       - "&7Teletransporta hacia donde miras"
