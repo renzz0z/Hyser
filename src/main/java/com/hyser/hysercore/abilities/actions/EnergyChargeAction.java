@@ -1,6 +1,7 @@
 package com.hyser.hysercore.abilities.actions;
 
 import com.hyser.hysercore.abilities.AbilityAction;
+import com.hyser.hysercore.utils.LangManager;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.configuration.ConfigurationSection;
@@ -191,7 +192,11 @@ public class EnergyChargeAction extends AbilityAction {
     }
     
     private String getConfigMessage(String key) {
-        // Por ahora retorna un mensaje por defecto, se actualizará para leer de lang.yml
+        LangManager langManager = LangManager.getInstance();
+        if (langManager != null) {
+            return langManager.getMessage(key);
+        }
+        // Fallback messages
         switch (key) {
             case "energy.charge.start": return ChatColor.YELLOW + "⚡ ¡Comenzando carga de energía! Mantén el objeto en mano...";
             case "energy.charge.interrupted": return ChatColor.RED + "⚡ Carga interrumpida: necesitas mantener el objeto en mano";

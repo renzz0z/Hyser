@@ -1,6 +1,7 @@
 package com.hyser.hysercore.abilities.triggers;
 
 import com.hyser.hysercore.abilities.AbilityTrigger;
+import com.hyser.hysercore.utils.LangManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
@@ -71,7 +72,11 @@ public class SequentialTrigger extends AbilityTrigger {
     }
     
     private String getConfigMessage(String key) {
-        // Por ahora retorna un mensaje por defecto, se actualizará para leer de lang.yml
+        LangManager langManager = LangManager.getInstance();
+        if (langManager != null) {
+            return langManager.getMessage(key);
+        }
+        // Fallback messages
         switch (key) {
             case "sequential.sequence-timeout": return org.bukkit.ChatColor.RED + "⚡ Secuencia expirada. Usa la habilidad de nuevo";
             default: return org.bukkit.ChatColor.GRAY + "Mensaje no encontrado";

@@ -1,6 +1,7 @@
 package com.hyser.hysercore.abilities.actions;
 
 import com.hyser.hysercore.abilities.AbilityAction;
+import com.hyser.hysercore.utils.LangManager;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -137,7 +138,11 @@ public class EnergyReleaseAction extends AbilityAction {
     }
     
     private String getConfigMessage(String key) {
-        // Por ahora retorna un mensaje por defecto, se actualizará para leer de lang.yml
+        LangManager langManager = LangManager.getInstance();
+        if (langManager != null) {
+            return langManager.getMessage(key);
+        }
+        // Fallback messages
         switch (key) {
             case "energy.release.insufficient": return ChatColor.RED + "⚡ Energía insuficiente: {current}/{required}";
             case "energy.release.explosion": return ChatColor.RED + "⚡ ¡EXPLOSIÓN DE ENERGÍA! ⚡";

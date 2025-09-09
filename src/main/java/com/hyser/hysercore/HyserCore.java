@@ -28,6 +28,7 @@ import com.hyser.hysercore.teamviewer.TeamViewerCommand;
 import com.hyser.hysercore.abilities.AbilityManager;
 import com.hyser.hysercore.abilities.AbilityListener;
 import com.hyser.hysercore.abilities.AbilityCommand;
+import com.hyser.hysercore.utils.LangManager;
 
 import java.io.File;
 import java.io.IOException;
@@ -42,6 +43,7 @@ public class HyserCore extends JavaPlugin implements Listener {
     private LunarWaypoints waypointManager;
     private LunarTeamViewer teamViewerManager;
     private AbilityManager abilityManager;
+    private LangManager langManager;
 
     @Override
     public void onEnable() {
@@ -56,6 +58,9 @@ public class HyserCore extends JavaPlugin implements Listener {
         // Cargar configuraciones
         saveDefaultConfig();
         loadChatGamesConfig();
+        
+        // Inicializar sistema de idiomas
+        langManager = LangManager.getInstance(this);
         
         // Inicializar sistema de ChatGames
         gameManager = new ChatGameManager(this);

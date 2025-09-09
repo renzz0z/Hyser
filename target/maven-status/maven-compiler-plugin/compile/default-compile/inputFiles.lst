@@ -5,9 +5,9 @@
 /home/runner/workspace/src/main/java/com/hyser/hysercore/waypoints/WaypointsCommand.java
 /home/runner/workspace/src/main/java/com/hyser/hysercore/enchantments/types/ExecutionerEnchantment.java
 /home/runner/workspace/src/main/java/com/hyser/hysercore/enchantments/types/ExplosiveEnchantment.java
-/home/runner/workspace/src/main/java/com/hyser/hysercore/HyserCore.java
 /home/runner/workspace/src/main/java/com/hyser/hysercore/enchantments/types/BleedingEnchantment.java
 /home/runner/workspace/src/main/java/com/hyser/hysercore/managers/ChatGameManager.java
+/home/runner/workspace/src/main/java/com/hyser/hysercore/HyserCore.java
 /home/runner/workspace/src/main/java/com/hyser/hysercore/abilities/AbilityCommand.java
 /home/runner/workspace/src/main/java/com/hyser/hysercore/apples/Apples.java
 /home/runner/workspace/src/main/java/com/hyser/hysercore/enchantments/managers/SwordEnchantmentManager.java
@@ -31,6 +31,7 @@
 /home/runner/workspace/src/main/java/com/hyser/hysercore/abilities/actions/HealRadiusAction.java
 /home/runner/workspace/src/main/java/com/hyser/hysercore/games/CompleteGame.java
 /home/runner/workspace/src/main/java/com/hyser/hysercore/abilities/actions/MessageAction.java
+/home/runner/workspace/src/main/java/com/hyser/hysercore/utils/LangManager.java
 /home/runner/workspace/src/main/java/com/hyser/hysercore/abilities/ItemAbilityManager.java
 /home/runner/workspace/src/main/java/com/hyser/hysercore/abilities/triggers/ClickTrigger.java
 /home/runner/workspace/src/main/java/com/hyser/hysercore/abilities/AbilityListener.java
