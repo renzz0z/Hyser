@@ -29,6 +29,11 @@ public class DoubleShiftTrigger extends AbilityTrigger {
             return false;
         }
         
+        // NUEVO: Solo activar si tiene un objeto de ability en mano
+        if (!hasAbilityItemInHand(player)) {
+            return false;
+        }
+        
         UUID playerId = player.getUniqueId();
         long currentTime = System.currentTimeMillis();
         
@@ -41,6 +46,27 @@ public class DoubleShiftTrigger extends AbilityTrigger {
         }
         
         lastShiftTime.put(playerId, currentTime);
+        return false;
+    }
+    
+    private boolean hasAbilityItemInHand(Player player) {
+        org.bukkit.inventory.ItemStack itemInHand = player.getItemInHand();
+        if (itemInHand == null || !itemInHand.hasItemMeta()) {
+            return false;
+        }
+        
+        org.bukkit.inventory.meta.ItemMeta meta = itemInHand.getItemMeta();
+        java.util.List<String> lore = meta.getLore();
+        
+        // Verificar si tiene el lore de ability
+        if (lore != null) {
+            for (String line : lore) {
+                if (line.contains("Usos restantes:")) {
+                    return true;
+                }
+            }
+        }
+        
         return false;
     }
 }

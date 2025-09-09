@@ -34,6 +34,11 @@ public class CombatTrigger extends AbilityTrigger {
             return false;
         }
         
+        // NUEVO: Solo procesar si el jugador tiene un objeto de ability en mano
+        if (!hasAbilityItemInHand(player)) {
+            return false;
+        }
+        
         EntityDamageByEntityEvent damageEvent = (EntityDamageByEntityEvent) event;
         Entity damager = damageEvent.getDamager();
         Entity victim = damageEvent.getEntity();
@@ -65,6 +70,27 @@ public class CombatTrigger extends AbilityTrigger {
                     return checkReceiveCount(playerId, damager, damage);
                 }
                 break;
+        }
+        
+        return false;
+    }
+    
+    private boolean hasAbilityItemInHand(Player player) {
+        org.bukkit.inventory.ItemStack itemInHand = player.getItemInHand();
+        if (itemInHand == null || !itemInHand.hasItemMeta()) {
+            return false;
+        }
+        
+        org.bukkit.inventory.meta.ItemMeta meta = itemInHand.getItemMeta();
+        java.util.List<String> lore = meta.getLore();
+        
+        // Verificar si tiene el lore de ability
+        if (lore != null) {
+            for (String line : lore) {
+                if (line.contains("Usos restantes:")) {
+                    return true;
+                }
+            }
         }
         
         return false;
