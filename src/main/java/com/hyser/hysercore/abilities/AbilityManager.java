@@ -287,6 +287,19 @@ public class AbilityManager {
             if (triggers != null) {
                 for (AbilityTrigger trigger : triggers) {
                     if (trigger.matches(event, player)) {
+                        // CRÍTICO: Para triggers de items, verificar que el item coincida ANTES de ejecutar
+                        if (trigger instanceof ItemUseTrigger && event instanceof org.bukkit.event.player.PlayerInteractEvent) {
+                            org.bukkit.event.player.PlayerInteractEvent interactEvent = (org.bukkit.event.player.PlayerInteractEvent) event;
+                            org.bukkit.inventory.ItemStack item = interactEvent.getItem();
+                            if (item == null) {
+                                continue; // No hay item, saltar esta ability
+                            }
+                            
+                            // Verificar que el item coincida exactamente con la configuración de esta ability
+                            if (!itemManager.isCorrectAbilityItem(item, ability.getId())) {
+                                continue; // Item no coincide, saltar esta ability
+                            }
+                        }
                         // Para triggers de items, verificar y consumir uso
                         if (trigger instanceof ItemUseTrigger) {
                             ItemUseTrigger itemTrigger = (ItemUseTrigger) trigger;

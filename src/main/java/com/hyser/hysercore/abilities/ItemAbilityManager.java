@@ -72,6 +72,61 @@ public class ItemAbilityManager {
         return item;
     }
     
+    public boolean isCorrectAbilityItem(ItemStack item, String abilityId) {
+        if (item == null || !item.hasItemMeta()) {
+            return false;
+        }
+        
+        // Obtener configuración de la ability
+        FileConfiguration abilityConfig = abilityManager.getAbilityConfigFile();
+        ConfigurationSection config = abilityConfig.getConfigurationSection("ability-items." + abilityId);
+        if (config == null) return false;
+        
+        // Verificar material
+        String expectedMaterialName = config.getString("item.material", "STICK");
+        Material expectedMaterial;
+        try {
+            expectedMaterial = Material.valueOf(expectedMaterialName.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            expectedMaterial = Material.STICK;
+        }
+        
+        if (item.getType() != expectedMaterial) {
+            return false;
+        }
+        
+        // Verificar data/durability si se especifica
+        int expectedData = config.getInt("item.data", 0);
+        if (expectedData > 0 && item.getDurability() != expectedData) {
+            return false;
+        }
+        
+        // Verificar nombre del item
+        Ability ability = abilityManager.getAbility(abilityId);
+        if (ability != null) {
+            ItemMeta meta = item.getItemMeta();
+            String expectedName = ChatColor.translateAlternateColorCodes('&', ability.getName());
+            String displayName = meta.getDisplayName();
+            
+            if (displayName == null || !displayName.equals(expectedName)) {
+                return false;
+            }
+        }
+        
+        // Verificar que tenga lore de ability (confirmación final)
+        ItemMeta meta = item.getItemMeta();
+        List<String> lore = meta.getLore();
+        if (lore != null) {
+            for (String line : lore) {
+                if (line.contains("Usos restantes:")) {
+                    return true;
+                }
+            }
+        }
+        
+        return false;
+    }
+    
     public boolean useAbilityItem(Player player, ItemStack item, String abilityId) {
         if (item == null || !item.hasItemMeta()) {
             return false;
