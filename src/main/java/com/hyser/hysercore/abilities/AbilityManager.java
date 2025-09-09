@@ -221,6 +221,8 @@ public class AbilityManager {
             case "COMBO_GIVE":
             case "COMBO_RECEIVE":
                 return new com.hyser.hysercore.abilities.triggers.ComboTrigger(type, config);
+            case "ABILITY_THEN_DOUBLE_SHIFT":
+                return new SequentialTrigger(type, config);
             default:
                 plugin.getLogger().warning("Unknown trigger type: " + type);
                 return null;
@@ -245,6 +247,12 @@ public class AbilityManager {
                 return new TeleportAction(type, config);
             case "VELOCITY":
                 return new VelocityAction(type, config);
+            case "ENERGY_CHARGE":
+                EnergyChargeAction energyCharge = new EnergyChargeAction(type, config);
+                energyCharge.setPlugin(plugin);
+                return energyCharge;
+            case "ENERGY_RELEASE":
+                return new EnergyReleaseAction(type, config);
             default:
                 plugin.getLogger().warning("Unknown action type: " + type);
                 return null;
